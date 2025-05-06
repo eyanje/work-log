@@ -8,6 +8,15 @@ use Inertia\Inertia;
 
 class BookController extends Controller
 {
+    public function create(Request $request) {
+        $name = $request->input('name');
+        $book = $request->user()->books()->create([
+            'name' => $name,
+        ]);
+
+        return redirect()->route('book.show', ['id' => $book->id]);
+    }
+
     public function show(Request $request, string $id)
     {
         $book = $request->user()->books()->findOrFail($id);
