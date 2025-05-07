@@ -39,7 +39,7 @@ test('update book metadata', function () {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertStatus(201);
+        ->assertRedirect("/book/{$book->id}/edit");
 
     // Reread book data
     $book = $user->books()->get()[0];

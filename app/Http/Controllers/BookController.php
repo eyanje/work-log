@@ -52,6 +52,6 @@ class BookController extends Controller
         $book->name = $name;
         $book->save();
 
-        return response('', 201);
+        return redirect()->route('book.edit', ['id' => $book->id]);
     }
 }
