@@ -14,12 +14,6 @@ test('append to book', function () {
 
     $book = $user->books()->get()[0];
 
-    $response = $this->post('/login', [
-        'email' => $user->email,
-        'password' => 'password',
-    ]);
-    $this->assertAuthenticated();
-
     $content = Str::random(10);
     $response = $this
         ->actingAs($user)
@@ -30,3 +24,25 @@ test('append to book', function () {
         ->assertSessionHasNoErrors()
         ->assertRedirect("/book/{$book->id}");
 });
+
+test('update book metadata', function () {
+
+    $user = User::factory()->has(
+        Book::factory()
+    )->create();
+
+    $book = $user->books()->get()[0];
+
+    $response = $this
+        ->actingAs($user)
+        ->patch("/book/{$book->id}", ['name' => 'test name']);
+
+    $response
+        ->assertSessionHasNoErrors()
+        ->assertStatus(201);
+
+    // Reread book data
+    $book = $user->books()->get()[0];
+    $this->assertSame($book->name, 'test name');
+});
+

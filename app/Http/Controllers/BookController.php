@@ -38,4 +38,20 @@ class BookController extends Controller
 
         return redirect()->route('book.show', ['id' => $id]);
     }
+
+    public function edit(Request $request, string $id) {
+        $book = $request->user()->books()->findOrFail($id);
+
+        return Inertia::render('EditBook', ['book' => $book]);
+    }
+
+    public function update(Request $request, string $id) {
+        $book = $request->user()->books()->findOrFail($id);
+        $name = $request->input('name');
+
+        $book->name = $name;
+        $book->save();
+
+        return response('', 201);
+    }
 }
