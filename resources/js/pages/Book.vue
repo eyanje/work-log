@@ -5,8 +5,8 @@ import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
-import { Ellipsis } from 'lucide-vue-next';
-import { computed, ref } from 'vue';
+import { Ellipsis, Pencil } from 'lucide-vue-next';
+import { computed } from 'vue';
 
 const page = usePage();
 
@@ -39,6 +39,12 @@ const testAct = (id: number) => {
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+            <div class="flex flex-row items-baseline gap-2">
+                <h1 class="text-2xl font-bold">{{ book.name }}</h1>
+                <Button as-child variant="ghost">
+                    <a :href="route('book.edit', { id: book.id })"><Pencil />Edit</a>
+                </Button>
+            </div>
             <form @submit.prevent="submit" class="flex flex-row gap-2">
                 <Input v-model="form.content" id="content-input" name="content" placeholder="New entry" aria-label="New entry" autofocus required />
                 <Button>Log</Button>

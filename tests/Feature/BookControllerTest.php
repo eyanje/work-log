@@ -14,12 +14,6 @@ test('append to book', function () {
 
     $book = $user->books()->get()[0];
 
-    $response = $this->post('/login', [
-        'email' => $user->email,
-        'password' => 'password',
-    ]);
-    $this->assertAuthenticated();
-
     $content = Str::random(10);
     $response = $this
         ->actingAs($user)
@@ -29,4 +23,43 @@ test('append to book', function () {
     $response
         ->assertSessionHasNoErrors()
         ->assertRedirect("/book/{$book->id}");
+});
+
+test('update book metadata', function () {
+    $user = User::factory()->has(
+        Book::factory()
+    )->create();
+
+    $book = $user->books()->get()[0];
+
+    $response = $this
+        ->actingAs($user)
+        ->patch("/book/{$book->id}", ['name' => 'test name']);
+
+    $response
+        ->assertSessionHasNoErrors()
+        ->assertRedirect("/book/{$book->id}/edit");
+
+    // Reread book data
+    $book = $user->books()->get()[0];
+    $this->assertSame($book->name, 'test name');
+});
+
+
+test('delete book', function () {
+    $user = User::factory()->has(
+        Book::factory()
+    )->create();
+
+    $book = $user->books()->get()[0];
+
+    $response = $this
+        ->actingAs($user)
+        ->delete("/book/{$book->id}");
+
+    $response
+        ->assertSessionHasNoErrors()
+        ->assertRedirect('/book-deleted');
+
+    $this->assertModelMissing($book);
 });

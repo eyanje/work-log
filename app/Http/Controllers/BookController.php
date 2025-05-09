@@ -38,4 +38,27 @@ class BookController extends Controller
 
         return redirect()->route('book.show', ['id' => $id]);
     }
+
+    public function edit(Request $request, string $id) {
+        $book = $request->user()->books()->findOrFail($id);
+
+        return Inertia::render('EditBook', ['book' => $book]);
+    }
+
+    public function update(Request $request, string $id) {
+        $book = $request->user()->books()->findOrFail($id);
+        $name = $request->input('name');
+
+        $book->name = $name;
+        $book->save();
+
+        return redirect()->route('book.edit', ['id' => $book->id]);
+    }
+
+    public function delete(Request $request, string $id) {
+        $book = $request->user()->books()->findOrFail($id);
+        $book->delete();
+
+        return redirect()->route('book.deleted');
+    }
 }
