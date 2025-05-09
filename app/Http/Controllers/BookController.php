@@ -54,4 +54,11 @@ class BookController extends Controller
 
         return redirect()->route('book.edit', ['id' => $book->id]);
     }
+
+    public function delete(Request $request, string $id) {
+        $book = $request->user()->books()->findOrFail($id);
+        $book->delete();
+
+        return redirect()->route('book.deleted');
+    }
 }

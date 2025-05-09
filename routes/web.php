@@ -31,5 +31,15 @@ Route::get('book/{id}/edit', [BookController::class, 'edit']
 Route::patch('book/{id}', [BookController::class, 'update']
 )->middleware(['auth', 'verified'])->name('book.update');
 
+// Deleting books
+
+Route::get('book-deleted', function () {
+    return Inertia::render('BookDeleted');
+})->middleware(['auth', 'verified'])->name('book.deleted');
+
+Route::delete('book/{id}', [BookController::class, 'delete']
+)->middleware(['auth', 'verified'])->name('book.delete');
+
 require __DIR__.'/settings.php';
+
 require __DIR__.'/auth.php';

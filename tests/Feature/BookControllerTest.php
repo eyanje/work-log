@@ -26,7 +26,6 @@ test('append to book', function () {
 });
 
 test('update book metadata', function () {
-
     $user = User::factory()->has(
         Book::factory()
     )->create();
@@ -46,3 +45,21 @@ test('update book metadata', function () {
     $this->assertSame($book->name, 'test name');
 });
 
+
+test('delete book', function () {
+    $user = User::factory()->has(
+        Book::factory()
+    )->create();
+
+    $book = $user->books()->get()[0];
+
+    $response = $this
+        ->actingAs($user)
+        ->delete("/book/{$book->id}");
+
+    $response
+        ->assertSessionHasNoErrors()
+        ->assertRedirect('/book-deleted');
+
+    $this->assertModelMissing($book);
+});

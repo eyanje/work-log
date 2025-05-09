@@ -66,7 +66,7 @@ const deleteBook = () => {
                     <Button variant="destructive">Delete Book</Button>
                 </DialogTrigger>
                 <DialogContent>
-                    <form class="space-y-6" @submit="deleteBook">
+                    <form class="space-y-6" @submit.prevent="deleteBook">
                         <DialogHeader class="space-y-3">
                             <DialogTitle>Are you sure you want to delete book "{{ book.name }}"?</DialogTitle>
                             <DialogDescription>
