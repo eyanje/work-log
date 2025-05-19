@@ -21,7 +21,7 @@ const book = computed(() => page.props.book);
 
 const breadcrumbs = [
     {
-        title: book.value.name,
+        title: book.value.title,
         href: route('book.show', { id: book.value.id }),
     },
     {
@@ -31,7 +31,7 @@ const breadcrumbs = [
 ];
 
 const form = useForm({
-    name: book.value.name,
+    title: book.value.title,
 });
 
 const submit = () => {
@@ -44,17 +44,17 @@ const deleteBook = () => {
 </script>
 
 <template>
-    <Head :title="`${book.name} | Edit`" />
+    <Head :title="`${book.title} | Edit`" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="mr-auto p-4">
-            <h1>Edit {{book.name}}</h1>
+            <h1>Edit {{book.title}}</h1>
 
             <h2>Metadata</h2>
             <form @submit.prevent="submit" class="grid gap-3">
                 <div class="grid gap-2">
-                    <Label for="name">Name</Label>
-                    <Input v-model="form.name" name="name" placeholder="My Book" />
+                    <Label for="title">Name</Label>
+                    <Input v-model="form.title" name="title" placeholder="My Book" />
                 </div>
                 <Button type="submit" :disabled="!form.isDirty" class="col-span-full">Save and exit</Button>
             </form>
@@ -68,7 +68,8 @@ const deleteBook = () => {
                 <DialogContent>
                     <form class="space-y-6" @submit.prevent="deleteBook">
                         <DialogHeader class="space-y-3">
-                            <DialogTitle>Are you sure you want to delete book "{{ book.name }}"?</DialogTitle>
+                            <DialogTitle>Are you sure you want to delete book
+                            "{{ book.title }}"?</DialogTitle>
                             <DialogDescription>
                                 All of its data will be permanently deleted.
                             </DialogDescription>

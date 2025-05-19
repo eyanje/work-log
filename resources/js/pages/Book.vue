@@ -15,7 +15,7 @@ const records = computed(() => page.props.records);
 
 const breadcrumbs: BreadcrumbItem = [
     {
-        title: book.name,
+        title: book.title,
         href: page.url,
     },
 ];
@@ -35,12 +35,12 @@ const testAct = (id: number) => {
 </script>
 
 <template>
-    <Head :title="book.name" />
+    <Head :title="book.title" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
             <div class="flex flex-row items-baseline gap-2">
-                <h1 class="text-2xl font-bold">{{ book.name }}</h1>
+                <h1 class="text-2xl font-bold">{{ book.title }}</h1>
                 <Button as-child variant="ghost">
                     <a :href="route('book.edit', { id: book.id })"><Pencil />Edit</a>
                 </Button>

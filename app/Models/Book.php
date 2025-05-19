@@ -12,7 +12,7 @@ class Book extends Model
     /** @use HasFactory<\Database\Factories\BookFactory> */
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['title'];
 
     public function owner(): BelongsTo
     {

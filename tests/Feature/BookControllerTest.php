@@ -34,7 +34,7 @@ test('update book metadata', function () {
 
     $response = $this
         ->actingAs($user)
-        ->patch("/book/{$book->id}", ['name' => 'test name']);
+        ->patch("/book/{$book->id}", ['title' => 'test title']);
 
     $response
         ->assertSessionHasNoErrors()
@@ -42,7 +42,7 @@ test('update book metadata', function () {
 
     // Reread book data
     $book = $user->books()->get()[0];
-    $this->assertSame($book->name, 'test name');
+    $this->assertSame($book->title, 'test title');
 });
 
 

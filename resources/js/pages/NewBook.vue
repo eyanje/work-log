@@ -17,7 +17,7 @@ const breadcrumbs: BreadcrumbItem = [
 ];
 
 const form = useForm({
-    name: '',
+    title: '',
 });
 
 const submit = () => {
@@ -36,9 +36,9 @@ const submit = () => {
         <div class="flex h-full w-96 flex-1 flex-col gap-4 rounded-xl p-4">
             <form @submit.prevent="submit" class="grid gap-4">
                 <div class="grid gap-2">
-                    <Label for="name">Name</Label>
-                    <Input v-model="form.name" required placeholder="My Notebook" />
-                    <InputError :message="form.errors.name" />
+                    <Label for="title">Name</Label>
+                    <Input v-model="form.title" required placeholder="My Notebook" />
+                    <InputError :message="form.errors.title" />
                 </div>
                 <Button type="submit" class="col-span-full" :disabled="form.processing">Create book</Button>
             </form>

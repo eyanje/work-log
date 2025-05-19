@@ -19,7 +19,7 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     ...books.value.map((book) => ({
-        title: book.name,
+        title: book.title,
         href: route('book.show', { id: book.id }),
         icon: NotebookText,
     })),
