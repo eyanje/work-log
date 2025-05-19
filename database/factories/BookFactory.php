@@ -18,7 +18,7 @@ class BookFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => Str::random(10),
+            'title' => Str::random(10),
         ];
     }
 }

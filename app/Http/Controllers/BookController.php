@@ -9,9 +9,9 @@ use Inertia\Inertia;
 class BookController extends Controller
 {
     public function create(Request $request) {
-        $name = $request->input('name');
+        $title = $request->input('title');
         $book = $request->user()->books()->create([
-            'name' => $name,
+            'title' => $title,
         ]);
 
         return redirect()->route('book.show', ['id' => $book->id]);
@@ -47,9 +47,9 @@ class BookController extends Controller
 
     public function update(Request $request, string $id) {
         $book = $request->user()->books()->findOrFail($id);
-        $name = $request->input('name');
+        $title = $request->input('title');
 
-        $book->name = $name;
+        $book->title = $title;
         $book->save();
 
         return redirect()->route('book.edit', ['id' => $book->id]);
