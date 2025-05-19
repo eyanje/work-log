@@ -53,7 +53,7 @@ const deleteBook = () => {
             <h2>Metadata</h2>
             <form @submit.prevent="submit" class="grid gap-3">
                 <div class="grid gap-2">
-                    <Label for="title">Name</Label>
+                    <Label for="title">Title</Label>
                     <Input v-model="form.title" name="title" placeholder="My Book" />
                 </div>
                 <Button type="submit" :disabled="!form.isDirty" class="col-span-full">Save and exit</Button>
