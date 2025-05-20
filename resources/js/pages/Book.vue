@@ -10,8 +10,31 @@ import { computed } from 'vue';
 
 const page = usePage();
 
-const book = page.props.book;
-const records = computed(() => page.props.records);
+const { status, book, records } = defineProps<{
+    status?: string;
+    book: {
+        id: number;
+        title: string;
+        created_at: string;
+    };
+    records: {
+        created_at: string;
+    }[];
+}>();
+
+const recordsWithDate = computed(() => {
+    // Add the showDate boolean field
+    let lastDate = null;
+    return records.map((record) => {
+        const recordDate = record.created_at.substr(0, record.created_at.indexOf('T'));
+        const showDate = lastDate != recordDate;
+        lastDate = recordDate;
+        return {
+            showDate: showDate,
+            ...record,
+        };
+    });
+});
 
 const breadcrumbs: BreadcrumbItem = [
     {
@@ -38,6 +61,10 @@ const testAct = (id: number) => {
     <Head :title="book.title" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
+        <div v-if="status" class="- mb-4 text-center text-sm font-medium text-green-600">
+            {{ status }}
+        </div>
+
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
             <div class="flex flex-row items-baseline gap-2">
                 <h1 class="text-2xl font-bold">{{ book.title }}</h1>
@@ -50,9 +77,14 @@ const testAct = (id: number) => {
                 <Button>Log</Button>
             </form>
             <div>
-                <div class="flex flex-row gap-4" v-for="record in records" v-bind:key="record.id">
-                    <div class="w-24 flex-none">
-                        {{ new Date(record.created_at).toLocaleTimeString() }}
+                <div class="flex flex-row items-baseline gap-4" v-for="record in recordsWithDate" v-bind:key="record.id">
+                    <div class="w-18 flex-none text-sm text-gray-700">
+                        <template v-if="record.showDate">
+                            {{ new Date(record.created_at).toLocaleDateString() }}
+                        </template>
+                    </div>
+                    <div class="w-18 flex-none text-sm text-gray-700">
+                        {{ new Date(record.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}
                     </div>
                     <div class="flex-1">
                         {{ record.content }}
