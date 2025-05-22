@@ -8,12 +8,8 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::get('library', [BookController::class, 'index']
-)->middleware(['auth', 'verified'])->name('books.index');
+)->middleware(['auth', 'verified'])->name('library');
 
 Route::get('books/new', function () {
     return Inertia::render('NewBook');

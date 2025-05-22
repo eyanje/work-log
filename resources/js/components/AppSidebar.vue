@@ -14,13 +14,8 @@ const books = computed(() => page.props.auth.books);
 
 const mainNavItems: NavItem[] = computed(() => [
     {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutGrid,
-    },
-    {
         title: 'Manage library',
-        href: '/library',
+        href: route('library'),
         icon: Library,
     },
     ...books.value
@@ -57,7 +52,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="route('dashboard')">
+                        <Link :href="route('library')">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>

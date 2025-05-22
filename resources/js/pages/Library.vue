@@ -2,15 +2,18 @@
 import TextLink from '@/components/TextLink.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { Book } from '@/types/book.d.ts';
+import { usePage } from '@inertiajs/vue3';
 
 const { status, books } = defineProps<{
     status?: string;
     books: Book[];
 }>();
 
+const page = usePage();
+
 const breadcrumbs = [
     {
-        href: route('books.index'),
+        href: page.url,
         title: 'Library',
     },
 ];
