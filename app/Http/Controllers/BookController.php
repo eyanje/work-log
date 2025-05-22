@@ -8,6 +8,12 @@ use Inertia\Inertia;
 
 class BookController extends Controller
 {
+    public function index(Request $request) {
+        $books = $request->user()->books;
+
+        return Inertia::render('Library', ['books' => $books]);
+    }
+
     public function create(Request $request) {
         $title = $request->input('title');
         $book = $request->user()->books()->create([
@@ -60,5 +66,23 @@ class BookController extends Controller
         $book->delete();
 
         return redirect()->route('book.deleted');
+    }
+
+    public function bookmark(Request $request, string $id) {
+        $book = $request->user()->books()->findOrFail($id);
+
+        $book->bookmarked = true;
+        $book->save();
+
+        return redirect()->route('book.show', ['id' => $book->id]);
+    }
+
+    public function unbookmark(Request $request, string $id) {
+        $book = $request->user()->books()->findOrFail($id);
+
+        $book->bookmarked = false;
+        $book->save();
+
+        return redirect()->route('book.show', ['id' => $book->id]);
     }
 }

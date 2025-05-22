@@ -5,30 +5,37 @@ import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, NotebookText, Plus } from 'lucide-vue-next';
+import { BookOpen, Folder, LayoutGrid, Library, NotebookText, Plus } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
 
 const page = usePage();
 const books = computed(() => page.props.auth.books);
 
-const mainNavItems: NavItem[] = [
+const mainNavItems: NavItem[] = computed(() => [
     {
         title: 'Dashboard',
         href: '/dashboard',
         icon: LayoutGrid,
     },
-    ...books.value.map((book) => ({
-        title: book.title,
-        href: route('book.show', { id: book.id }),
-        icon: NotebookText,
-    })),
+    {
+        title: 'Manage library',
+        href: '/library',
+        icon: Library,
+    },
+    ...books.value
+        .filter((book) => book.bookmarked)
+        .map((book) => ({
+            title: book.title,
+            href: route('book.show', { id: book.id }),
+            icon: NotebookText,
+        })),
     {
         title: 'New book',
         href: '/books/new',
         icon: Plus,
     },
-];
+]);
 
 const footerNavItems: NavItem[] = [
     {

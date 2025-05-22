@@ -4,19 +4,16 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head, useForm, usePage } from '@inertiajs/vue3';
-import { Ellipsis, Pencil } from 'lucide-vue-next';
+import type { Book } from '@/types/book.d.ts';
+import { Head, router, useForm, usePage } from '@inertiajs/vue3';
+import { Bookmark, Ellipsis, Pencil } from 'lucide-vue-next';
 import { computed } from 'vue';
 
 const page = usePage();
 
 const { status, book, records } = defineProps<{
     status?: string;
-    book: {
-        id: number;
-        title: string;
-        created_at: string;
-    };
+    book: Book;
     records: {
         created_at: string;
     }[];
@@ -55,6 +52,14 @@ const submit = () => {
 const testAct = (id: number) => {
     console.log(`Test action for ${id}`);
 };
+
+const bookmark = (book: Book) => {
+    if (book.bookmarked) {
+        router.delete(route('book.unbookmark', { id: book.id }));
+    } else {
+        router.post(route('book.bookmark', { id: book.id }));
+    }
+};
 </script>
 
 <template>
@@ -65,11 +70,21 @@ const testAct = (id: number) => {
             {{ status }}
         </div>
 
-        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+        <div class="flex flex-1 flex-col gap-4 p-4">
             <div class="flex flex-row items-baseline gap-2">
                 <h1 class="text-2xl font-bold">{{ book.title }}</h1>
                 <Button as-child variant="ghost">
                     <a :href="route('book.edit', { id: book.id })"><Pencil />Edit</a>
+                </Button>
+                <Button variant="ghost" @click="bookmark(book)">
+                    <template v-if="book.bookmarked">
+                        <Bookmark fill="#000" />
+                        Bookmarked
+                    </template>
+                    <template v-else>
+                        <Bookmark />
+                        Not bookmarked
+                    </template>
                 </Button>
             </div>
             <form @submit.prevent="submit" class="flex flex-row gap-2">
@@ -128,11 +143,13 @@ td {
     text-align: left;
 }
 
-th:first-child, td:first-child {
+th:first-child,
+td:first-child {
     padding-left: 0;
 }
 
-th:last-child, td:last-child {
+th:last-child,
+td:last-child {
     padding-right: 0;
 }
 </style>
