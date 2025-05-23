@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookICalendarController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -38,7 +39,7 @@ Route::get('book-deleted', function () {
 
 Route::delete('book/{id}', [BookController::class, 'delete']
 )->middleware(['auth', 'verified'])->name('book.delete');
-//
+
 // Bookmarks
 
 Route::post('book/{id}/bookmark', [BookController::class, 'bookmark']
@@ -46,6 +47,11 @@ Route::post('book/{id}/bookmark', [BookController::class, 'bookmark']
 
 Route::delete('book/{id}/bookmark', [BookController::class, 'unbookmark']
 )->middleware(['auth', 'verified'])->name('book.unbookmark');
+
+// Exporting
+
+Route::get('book/{id}/export', [BookICalendarController::class, 'export']
+)->middleware(['auth', 'verified'])->name('book.export');
 
 require __DIR__.'/settings.php';
 

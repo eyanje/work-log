@@ -43,20 +43,29 @@ const submit = () => {
     <Head :title="`${book.title} | Edit`" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="mr-auto p-4">
+        <div class="m-4">
             <h1>Edit {{ book.title }}</h1>
 
             <h2>Metadata</h2>
-            <form @submit.prevent="submit" class="grid gap-3">
-                <div class="grid gap-2">
+            <form @submit.prevent="submit" class="mr-auto w-fit">
+                <p class="grid gap-2">
                     <Label for="title">Title</Label>
                     <Input v-model="form.title" name="title" placeholder="My Book" />
-                </div>
-                <Button type="submit" :disabled="!form.isDirty" class="col-span-full">Save and exit</Button>
+                </p>
+                <p>
+                    <Button type="submit" :disabled="!form.isDirty" class="col-span-full">Save</Button>
+                </p>
             </form>
 
-            <h2>Special Actions</h2>
+            <h2>Export</h2>
+            <p>Export notebooks regularly to avoid losing data.</p>
+            <div>
+                <Button as-child>
+                    <a :href="route('book.export', { id: book.id })">Export as iCalendar</a>
+                </Button>
+            </div>
 
+            <h2>Special Actions</h2>
             <Dialog>
                 <DialogTrigger>
                     <Button variant="destructive">Delete Book</Button>
@@ -66,7 +75,6 @@ const submit = () => {
                         <DialogTitle>Are you sure you want to delete book "{{ book.title }}"?</DialogTitle>
                         <DialogDescription> All of its data will be permanently deleted. </DialogDescription>
                     </DialogHeader>
-
                     <DialogFooter>
                         <DialogClose>
                             <Button type="button" variant="secondary">Cancel</Button>
@@ -83,16 +91,20 @@ const submit = () => {
 
 <style>
 h1 {
-    margin-top: calc(var(--spacing) * 4);
-    margin-bottom: calc(var(--spacing) * 2);
+    margin-bottom: calc(var(--spacing) * 3);
     font-size: x-large;
     font-weight: bold;
 }
 
 h2 {
     margin-top: calc(var(--spacing) * 6);
-    margin-bottom: calc(var(--spacing) * 3);
+    margin-bottom: calc(var(--spacing) * 1);
     font-size: large;
     font-weight: bold;
+}
+
+form,
+p {
+    margin-bottom: calc(var(--spacing) * 1);
 }
 </style>
