@@ -8,9 +8,8 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('library', [BookController::class, 'index']
+)->middleware(['auth', 'verified'])->name('library');
 
 Route::get('books/new', function () {
     return Inertia::render('NewBook');
@@ -39,6 +38,14 @@ Route::get('book-deleted', function () {
 
 Route::delete('book/{id}', [BookController::class, 'delete']
 )->middleware(['auth', 'verified'])->name('book.delete');
+//
+// Bookmarks
+
+Route::post('book/{id}/bookmark', [BookController::class, 'bookmark']
+)->middleware(['auth', 'verified'])->name('book.bookmark');
+
+Route::delete('book/{id}/bookmark', [BookController::class, 'unbookmark']
+)->middleware(['auth', 'verified'])->name('book.unbookmark');
 
 require __DIR__.'/settings.php';
 

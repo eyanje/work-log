@@ -4,14 +4,34 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head, useForm, usePage } from '@inertiajs/vue3';
-import { Ellipsis, Pencil } from 'lucide-vue-next';
+import type { Book } from '@/types/book.d.ts';
+import { Head, router, useForm, usePage } from '@inertiajs/vue3';
+import { Bookmark, Ellipsis, Pencil } from 'lucide-vue-next';
 import { computed } from 'vue';
 
 const page = usePage();
 
-const book = page.props.book;
-const records = computed(() => page.props.records);
+const { status, book, records } = defineProps<{
+    status?: string;
+    book: Book;
+    records: {
+        created_at: string;
+    }[];
+}>();
+
+const recordsWithDate = computed(() => {
+    // Add the showDate boolean field
+    let lastDate = null;
+    return records.map((record) => {
+        const recordDate = new Date(record.created_at).toLocaleDateString();
+        const showDate = lastDate != recordDate;
+        lastDate = recordDate;
+        return {
+            showDate: showDate,
+            ...record,
+        };
+    });
+});
 
 const breadcrumbs: BreadcrumbItem = [
     {
@@ -32,43 +52,104 @@ const submit = () => {
 const testAct = (id: number) => {
     console.log(`Test action for ${id}`);
 };
+
+const bookmark = (book: Book) => {
+    if (book.bookmarked) {
+        router.delete(route('book.unbookmark', { id: book.id }));
+    } else {
+        router.post(route('book.bookmark', { id: book.id }));
+    }
+};
 </script>
 
 <template>
     <Head :title="book.title" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+        <div v-if="status" class="- mb-4 text-center text-sm font-medium text-green-600">
+            {{ status }}
+        </div>
+
+        <div class="flex flex-1 flex-col gap-4 p-4">
             <div class="flex flex-row items-baseline gap-2">
                 <h1 class="text-2xl font-bold">{{ book.title }}</h1>
                 <Button as-child variant="ghost">
                     <a :href="route('book.edit', { id: book.id })"><Pencil />Edit</a>
+                </Button>
+                <Button variant="ghost" @click="bookmark(book)">
+                    <template v-if="book.bookmarked">
+                        <Bookmark fill="#000" />
+                        Bookmarked
+                    </template>
+                    <template v-else>
+                        <Bookmark />
+                        Not bookmarked
+                    </template>
                 </Button>
             </div>
             <form @submit.prevent="submit" class="flex flex-row gap-2">
                 <Input v-model="form.content" id="content-input" name="content" placeholder="New entry" aria-label="New entry" autofocus required />
                 <Button>Log</Button>
             </form>
-            <div>
-                <div class="flex flex-row gap-4" v-for="record in records" v-bind:key="record.id">
-                    <div class="w-24 flex-none">
-                        {{ new Date(record.created_at).toLocaleTimeString() }}
-                    </div>
-                    <div class="flex-1">
-                        {{ record.content }}
-                    </div>
-                    <div class="flex-none">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger>
-                                <Ellipsis class="size-5" />
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem @click="() => testAct(record.id)"> Test action </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
-                </div>
-            </div>
+            <table>
+                <thead class="hidden">
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Entry</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="record in recordsWithDate" v-bind:key="record.id">
+                        <td class="text-sm text-gray-700">
+                            <template v-if="record.showDate">
+                                {{ new Date(record.created_at).toLocaleDateString() }}
+                            </template>
+                        </td>
+                        <td class="text-sm text-gray-700">
+                            <time class="text-nowrap">{{
+                                new Date(record.created_at).toLocaleTimeString([], {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                })
+                            }}</time>
+                        </td>
+                        <td class="w-full">
+                            {{ record.content }}
+                        </td>
+                        <td>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger>
+                                    <Ellipsis class="size-5" />
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                    <DropdownMenuItem @click="() => testAct(record.id)"> Test action </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </AppLayout>
 </template>
+
+<style>
+th,
+td {
+    padding-left: calc(var(--spacing) * 2);
+    padding-right: calc(var(--spacing) * 2);
+    text-align: left;
+}
+
+th:first-child,
+td:first-child {
+    padding-left: 0;
+}
+
+th:last-child,
+td:last-child {
+    padding-right: 0;
+}
+</style>
