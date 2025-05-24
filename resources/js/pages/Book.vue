@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import type { Book } from '@/types/book.d.ts';
-import { Head, router, useForm, usePage } from '@inertiajs/vue3';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
 import { Bookmark, Ellipsis, Pencil } from 'lucide-vue-next';
 import { computed } from 'vue';
 
@@ -74,7 +74,7 @@ const bookmark = (book: Book) => {
             <div class="flex flex-row items-baseline gap-2">
                 <h1 class="text-2xl font-bold">{{ book.title }}</h1>
                 <Button as-child variant="ghost">
-                    <a :href="route('book.edit', { id: book.id })"><Pencil />Edit</a>
+                    <Link :href="route('book.edit', { id: book.id })"><Pencil />Edit</Link>
                 </Button>
                 <Button variant="ghost" @click="bookmark(book)">
                     <template v-if="book.bookmarked">

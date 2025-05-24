@@ -13,7 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, router, useForm, usePage } from '@inertiajs/vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 const page = usePage();
@@ -37,10 +37,6 @@ const form = useForm({
 const submit = () => {
     form.patch(route('book.update', { id: book.value.id }));
 };
-
-const deleteBook = () => {
-    router.delete(route('book.delete', { id: book.value.id }));
-};
 </script>
 
 <template>
@@ -48,7 +44,7 @@ const deleteBook = () => {
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="mr-auto p-4">
-            <h1>Edit {{book.title}}</h1>
+            <h1>Edit {{ book.title }}</h1>
 
             <h2>Metadata</h2>
             <form @submit.prevent="submit" class="grid gap-3">
@@ -66,22 +62,19 @@ const deleteBook = () => {
                     <Button variant="destructive">Delete Book</Button>
                 </DialogTrigger>
                 <DialogContent>
-                    <form class="space-y-6" @submit.prevent="deleteBook">
-                        <DialogHeader class="space-y-3">
-                            <DialogTitle>Are you sure you want to delete book
-                            "{{ book.title }}"?</DialogTitle>
-                            <DialogDescription>
-                                All of its data will be permanently deleted.
-                            </DialogDescription>
-                        </DialogHeader>
+                    <DialogHeader class="space-y-3">
+                        <DialogTitle>Are you sure you want to delete book "{{ book.title }}"?</DialogTitle>
+                        <DialogDescription> All of its data will be permanently deleted. </DialogDescription>
+                    </DialogHeader>
 
-                        <DialogFooter>
-                            <DialogClose>
-                                <Button type="button" variant="secondary">Cancel</Button>
-                            </DialogClose>
-                            <Button type="submit" variant="destructive" :disabled="form.processing">Delete</Button>
-                        </DialogFooter>
-                    </form>
+                    <DialogFooter>
+                        <DialogClose>
+                            <Button type="button" variant="secondary">Cancel</Button>
+                        </DialogClose>
+                        <Button as-child variant="destructive">
+                            <Link :href="route('book.delete', { id: book.id })" method="delete">Delete</Link>
+                        </Button>
+                    </DialogFooter>
                 </DialogContent>
             </Dialog>
         </div>
