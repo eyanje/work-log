@@ -1,13 +1,20 @@
 <?php
 
 use App\Models\Book;
+use App\Models\Record;
 use App\Models\User;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-test('append to book', function () {
+test('export book', function () {
     $user = User::factory()->has(
-        Book::factory()
+        Book::factory()->has(
+            Record::factory()->state([
+                'content' => 'summary',
+                'created_at' => '20250521T175517Z',
+                'updated_at' => '20250521T175517Z',
+            ])
+        )
     )->create();
 
     $book = $user->books()->get()[0];
@@ -21,4 +28,3 @@ test('append to book', function () {
         ->assertStreamed()
         ->assertDownload();
 });
-
