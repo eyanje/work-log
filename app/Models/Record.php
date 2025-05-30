@@ -16,7 +16,7 @@ class Record extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['content'];
+    protected $fillable = ['content', 'started_at', 'ended_at'];
 
     public function book(): BelongsTo
     {
