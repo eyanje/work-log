@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Eluceo\iCal\Domain\Entity\Calendar;
-use Eluceo\iCal\Domain\Entity\Event;
-use Eluceo\iCal\Domain\ValueObject\DateTime;
-use Eluceo\iCal\Domain\ValueObject\TimeSpan;
-use Eluceo\iCal\Domain\ValueObject\UniqueIdentifier;
-use Eluceo\iCal\Presentation\Factory\CalendarFactory;
 use Illuminate\Http\Request;
+use Sabre\VObject\Component\VCalendar;
 
 class BookICalendarController extends Controller
 {
@@ -17,23 +12,20 @@ class BookICalendarController extends Controller
         $book = $request->user()->books()->findOrFail($id);
         $records = $book->records;
 
-        $calendar = new Calendar;
+        $calendar = new VCalendar;
 
         foreach ($records as $record) {
-            $uid = new UniqueIdentifier("work-log/{$record->id}");
-            $event = new Event($uid);
-            $dateTime = new DateTime($record->created_at, true);
-
-            $event->setOccurrence(new TimeSpan($dateTime, $dateTime))
-                ->setSummary($record->content);
-            $calendar->addEvent($event);
+            $calendar->add('VJOURNAL', [
+                'UID' => "work-log-{$record->id}",
+                'DTSTAMP' => $record->updated_at,
+                'SUMMARY' => $record->content,
+                'DTSTART' => $record->created_at,
+                'X-WORK-LOG-BOOK' => $book->id,
+            ]);
         }
 
-        $componentFactory = new CalendarFactory;
-        $calendarComponent = $componentFactory->createCalendar($calendar);
-
-        return response()->streamDownload(function () use ($calendarComponent) {
-            echo $calendarComponent;
+        return response()->streamDownload(function () use ($calendar) {
+            echo $calendar->serialize();
         }, 'journal-export.ics');
     }
 }
