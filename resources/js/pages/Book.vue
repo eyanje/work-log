@@ -15,7 +15,8 @@ const { status, book, records } = defineProps<{
     status?: string;
     book: Book;
     records: {
-        created_at: string;
+        started_at: string;
+        ended_at?: string;
     }[];
 }>();
 
@@ -23,7 +24,7 @@ const recordsWithDate = computed(() => {
     // Add the showDate boolean field
     let lastDate = null;
     return records.map((record) => {
-        const recordDate = new Date(record.created_at).toLocaleDateString();
+        const recordDate = new Date(record.started_at).toLocaleDateString();
         const showDate = lastDate != recordDate;
         lastDate = recordDate;
         return {
@@ -42,9 +43,13 @@ const breadcrumbs: BreadcrumbItem = [
 
 const form = useForm({
     content: '',
+    started_at: null,
 });
 
 const submit = () => {
+    // Add the start date from the client
+    form.started_at = new Date();
+
     form.post(route('book.append', { id: book.id }));
     form.reset();
 };
@@ -104,12 +109,12 @@ const bookmark = (book: Book) => {
                     <tr v-for="record in recordsWithDate" v-bind:key="record.id">
                         <td class="text-sm text-gray-700">
                             <template v-if="record.showDate">
-                                {{ new Date(record.created_at).toLocaleDateString() }}
+                                {{ new Date(record.started_at).toLocaleDateString() }}
                             </template>
                         </td>
                         <td class="text-sm text-gray-700">
                             <time class="text-nowrap">{{
-                                new Date(record.created_at).toLocaleTimeString([], {
+                                new Date(record.started_at).toLocaleTimeString([], {
                                     hour: '2-digit',
                                     minute: '2-digit',
                                 })
