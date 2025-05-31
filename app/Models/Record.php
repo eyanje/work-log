@@ -17,9 +17,21 @@ class Record extends Model
      * @var array<int, string>
      */
     protected $fillable = ['content', 'started_at', 'ended_at'];
-
     public function book(): BelongsTo
     {
         return $this->belongsTo(Book::class);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'started_at' => 'datetime',
+            'ended_at' => 'datetime',
+        ];
     }
 }

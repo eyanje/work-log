@@ -15,13 +15,17 @@ class BookICalendarController extends Controller
         $calendar = new VCalendar;
 
         foreach ($records as $record) {
-            $calendar->add('VJOURNAL', [
+            $properties = [
                 'UID' => "work-log-{$record->id}",
                 'DTSTAMP' => $record->updated_at,
                 'SUMMARY' => $record->content,
-                'DTSTART' => $record->created_at,
+                'DTSTART' => $record->started_at,
                 'X-WORK-LOG-BOOK' => $book->id,
-            ]);
+            ];
+            if ($record->ended_at != null) {
+                $properties['DTEND'] = $record->ended_at;
+            }
+            $calendar->add('VJOURNAL', $properties);
         }
 
         return response()->streamDownload(function () use ($calendar) {

@@ -25,7 +25,7 @@ class RecordFactory extends Factory
         return [
             'content' => Str::random(20),
             'started_at' => $startedAt,
-            'ended_at' => $endedAt,
+            'ended_at' => null,
         ];
     }
 }

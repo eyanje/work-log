@@ -29,17 +29,23 @@ class BookController extends Controller
 
         return Inertia::render('Book', [
             'book' => $book,
-            'records' => $book->records()->orderBy('created_at', 'desc')->get(),
+            'records' => $book->records()->orderBy('started_at', 'desc')->get(),
         ]);
     }
 
     public function append(Request $request, string $id)
     {
-        $content = $request->input('content');
+        $request->validate([
+            'content' => ['required'],
+            'started_at' => ['required', 'date'],
+            'ended_at' => ['date', 'after_or_equal:started_at'],
+        ]);
 
         $book = $request->user()->books->findOrFail($id);
         $book->records()->create([
-            'content' => $content,
+            'content' => $request->input('content'),
+            'started_at' => $request->input('started_at'),
+            'ended_at' => $request->input('ended_at'),
         ]);
 
         return redirect()->route('book.show', ['id' => $id]);
