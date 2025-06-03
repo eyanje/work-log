@@ -53,6 +53,9 @@ Route::delete('book/{id}/bookmark', [BookController::class, 'unbookmark']
 Route::get('book/{id}/export', [BookICalendarController::class, 'export']
 )->middleware(['auth', 'verified'])->name('book.export');
 
+Route::post('book/{id}/import', [BookICalendarController::class, 'import']
+)->middleware(['auth', 'verified'])->name('book.import');
+
 require __DIR__.'/settings.php';
 
 require __DIR__.'/auth.php';
