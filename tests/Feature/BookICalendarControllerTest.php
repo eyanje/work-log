@@ -40,7 +40,7 @@ test('import book', function () {
 
     $calendar = new VCalendar;
     $calendar->add('VJOURNAL', [
-        'UID' => "work-log-1",
+        'UID' => 'work-log-1',
         'DTSTAMP' => '20250521T175518Z',
         'SUMMARY' => 'imported summary',
         'DTSTART' => '20250521T175517Z',
@@ -89,4 +89,90 @@ test('import invalid data', function () {
     // Reload book data
     $book = $user->books()->get()[0];
     $this->assertCount(0, $book->records);
+});
+
+test('import twice', function () {
+    $user = User::factory()->has(
+        Book::factory()
+    )->create();
+
+    $book = $user->books()->get()[0];
+
+    $calendar = new VCalendar;
+    $calendar->add('VJOURNAL', [
+        'UID' => 'work-log-1',
+        'DTSTAMP' => '20250521T175518Z',
+        'SUMMARY' => 'imported summary',
+        'DTSTART' => '20250521T175517Z',
+    ]);
+
+    $file = UploadedFile::fake()
+        ->createWithContent('journal-import.ics', $calendar->serialize());
+
+    $response = $this
+        ->actingAs($user)
+        ->post("/book/{$book->id}/import", [
+            'book' => $file,
+        ]);
+
+    $response->assertRedirect(route('book.edit', ['id' => $book->id]));
+
+    $response = $this
+        ->actingAs($user)
+        ->post("/book/{$book->id}/import", [
+            'book' => $file,
+        ]);
+
+    $response->assertRedirect(route('book.edit', ['id' => $book->id]));
+
+    // Reload book data
+    $book = $user->books()->get()[0];
+    $this->assertCount(1, $book->records);
+
+    $record = $book->records()->get()[0];
+    $this->assertEquals('imported summary', $record->content);
+    $this->assertEquals(
+        DateTimeImmutable::createFromFormat('Ymd\\THise', '20250521T175517Z'),
+        $record->started_at);
+});
+
+test('no change on exporting and importing', function () {
+    $user = User::factory()->has(
+        Book::factory()->has(
+            Record::factory()->state([
+                'content' => 'summary',
+                'created_at' => '20250521T175517Z',
+                'updated_at' => '20250521T175517Z',
+            ])
+        )
+    )->create();
+
+    $book = $user->books()->get()[0];
+
+    $response = $this
+        ->actingAs($user)
+        ->get("/book/{$book->id}/export");
+
+    $response->assertStreamed();
+
+    $file = UploadedFile::fake()
+        ->createWithContent('export.ics', $response->streamedContent());
+
+    $response = $this
+        ->actingAs($user)
+        ->post("/book/{$book->id}/import", [
+            'book' => $file,
+        ]);
+
+    $response->assertRedirect(route('book.edit', ['id' => $book->id]));
+
+    // Reload book data
+    $book = $user->books()->get()[0];
+    $this->assertCount(1, $book->records);
+
+    $record = $book->records()->get()[0];
+    $this->assertEquals('imported summary', $record->content);
+    $this->assertEquals(
+        DateTimeImmutable::createFromFormat('Ymd\\THise', '20250521T175517Z'),
+        $record->started_at);
 });
