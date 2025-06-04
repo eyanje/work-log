@@ -64,6 +64,7 @@ test('append to book with end time', function () {
         ->assertRedirect("/book/{$book->id}");
 
     $this->assertCount(1, $book->records);
+    $this->assertNotNull($book->records[0]->uid);
     $this->assertEquals($content, $book->records[0]->content);
     $this->assertEquals($startedAt, $book->records[0]->started_at);
     $this->assertEquals($endedAt, $book->records[0]->ended_at);

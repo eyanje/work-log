@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class BookController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $books = $request->user()->books;
 
         return Inertia::render('Library', ['books' => $books]);
     }
 
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         $title = $request->input('title');
         $book = $request->user()->books()->create([
             'title' => $title,
@@ -43,6 +45,7 @@ class BookController extends Controller
 
         $book = $request->user()->books->findOrFail($id);
         $book->records()->create([
+            'uid' => Str::uuid7(),
             'content' => $request->input('content'),
             'started_at' => $request->input('started_at'),
             'ended_at' => $request->input('ended_at'),
@@ -51,13 +54,15 @@ class BookController extends Controller
         return redirect()->route('book.show', ['id' => $id]);
     }
 
-    public function edit(Request $request, string $id) {
+    public function edit(Request $request, string $id)
+    {
         $book = $request->user()->books()->findOrFail($id);
 
         return Inertia::render('EditBook', ['book' => $book]);
     }
 
-    public function update(Request $request, string $id) {
+    public function update(Request $request, string $id)
+    {
         $book = $request->user()->books()->findOrFail($id);
         $title = $request->input('title');
 
@@ -67,14 +72,16 @@ class BookController extends Controller
         return redirect()->route('book.edit', ['id' => $book->id]);
     }
 
-    public function delete(Request $request, string $id) {
+    public function delete(Request $request, string $id)
+    {
         $book = $request->user()->books()->findOrFail($id);
         $book->delete();
 
         return redirect()->route('book.deleted');
     }
 
-    public function bookmark(Request $request, string $id) {
+    public function bookmark(Request $request, string $id)
+    {
         $book = $request->user()->books()->findOrFail($id);
 
         $book->bookmarked = true;
@@ -83,7 +90,8 @@ class BookController extends Controller
         return redirect()->route('book.show', ['id' => $book->id]);
     }
 
-    public function unbookmark(Request $request, string $id) {
+    public function unbookmark(Request $request, string $id)
+    {
         $book = $request->user()->books()->findOrFail($id);
 
         $book->bookmarked = false;

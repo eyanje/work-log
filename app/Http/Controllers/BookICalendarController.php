@@ -16,7 +16,7 @@ class BookICalendarController extends Controller
 
         foreach ($records as $record) {
             $properties = [
-                'UID' => "work-log-{$record->id}",
+                'UID' => $record->uid,
                 'DTSTAMP' => $record->updated_at,
                 'SUMMARY' => $record->content,
                 'DTSTART' => $record->started_at,
