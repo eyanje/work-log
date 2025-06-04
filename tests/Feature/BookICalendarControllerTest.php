@@ -100,7 +100,7 @@ test('import twice', function () {
 
     $calendar = new VCalendar;
     $calendar->add('VJOURNAL', [
-        'UID' => 'work-log-1',
+        'UID' => 'work-log/1',
         'DTSTAMP' => '20250521T175518Z',
         'SUMMARY' => 'imported summary',
         'DTSTART' => '20250521T175517Z',
@@ -137,13 +137,16 @@ test('import twice', function () {
 });
 
 test('no change on exporting and importing', function () {
+    $data = [
+        'content' => 'summary',
+        'started_at' => '20250521T175516Z',
+        'created_at' => '20250521T175517Z',
+        'updated_at' => '20250521T175518Z',
+    ];
+
     $user = User::factory()->has(
         Book::factory()->has(
-            Record::factory()->state([
-                'content' => 'summary',
-                'created_at' => '20250521T175517Z',
-                'updated_at' => '20250521T175517Z',
-            ])
+            Record::factory()->state($data)
         )
     )->create();
 
@@ -171,8 +174,8 @@ test('no change on exporting and importing', function () {
     $this->assertCount(1, $book->records);
 
     $record = $book->records()->get()[0];
-    $this->assertEquals('imported summary', $record->content);
+    $this->assertEquals($data['content'], $record->content);
     $this->assertEquals(
-        DateTimeImmutable::createFromFormat('Ymd\\THise', '20250521T175517Z'),
+        DateTimeImmutable::createFromFormat('Ymd\\THise', $data['started_at']),
         $record->started_at);
 });

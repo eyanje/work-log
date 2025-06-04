@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Sabre\VObject;
 use Sabre\VObject\Component\VCalendar;
 
@@ -34,6 +35,13 @@ class BookICalendarController extends Controller
         }, 'journal-export.ics');
     }
 
+    public function importForm(Request $request, string $id)
+    {
+        $book = $request->user()->books()->findOrFail($id);
+
+        return Inertia::render('ImportBook', ['book' => $book]);
+    }
+
     public function import(Request $request, string $id)
     {
         $book = $request->user()->books()->findOrFail($id);
@@ -42,13 +50,25 @@ class BookICalendarController extends Controller
         $calendar = VObject\Reader::read($request->file('book')->get());
 
         foreach ($calendar->VJOURNAL as $journal) {
-            $record = $book->records()->create([
-                'content' => $journal->SUMMARY,
-                'started_at' => $journal->DTSTART,
-            ]);
+            $oldRecord = $book->records()
+                ->where('uid', $journal->UID)
+                ->get()
+                ->first();
+
+            // Skip this entry if it is out of date.
+            if ($oldRecord != null && $oldRecord->updated_at >= $journal->DTSTAMP) {
+                continue;
+            }
+
+            // If the old record is null, make and modify a new record.
+            $record = $oldRecord ?? $book->records()->make(['uid' => $journal->UID]);
+
+            $record->content = $journal->SUMMARY;
+            $record->started_at = $journal->DTSTART;
             if ($record->DTEND != null) {
                 $record['ended_at'] = $journal->DTEND;
             }
+
             $record->save();
         }
 
