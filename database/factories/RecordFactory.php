@@ -23,6 +23,7 @@ class RecordFactory extends Factory
         $startedAt = $dateFactory->createFromTimestampUTC(min($dates[0], $dates[1]));
         $endedAt = $dateFactory->createFromTimestampUTC(max($dates[0], $dates[1]));
         return [
+            'uid' => Str::uuid7(),
             'content' => Str::random(20),
             'started_at' => $startedAt,
             'ended_at' => null,

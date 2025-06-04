@@ -16,7 +16,8 @@ class Record extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['content', 'started_at', 'ended_at'];
+    protected $fillable = ['uid', 'content', 'started_at', 'ended_at'];
+
     public function book(): BelongsTo
     {
         return $this->belongsTo(Book::class);
