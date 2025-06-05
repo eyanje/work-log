@@ -55,7 +55,7 @@ test('import book', function () {
             'book' => $file,
         ]);
 
-    $response->assertRedirect(route('book.edit', ['id' => $book->id]));
+    $response->assertRedirect("/book/{$book->id}");
 
     // Reload book data
     $book = $user->books()->get()[0];
@@ -115,7 +115,7 @@ test('import twice', function () {
             'book' => $file,
         ]);
 
-    $response->assertRedirect(route('book.edit', ['id' => $book->id]));
+    $response->assertRedirect("/book/{$book->id}");
 
     $response = $this
         ->actingAs($user)
@@ -123,7 +123,7 @@ test('import twice', function () {
             'book' => $file,
         ]);
 
-    $response->assertRedirect(route('book.edit', ['id' => $book->id]));
+    $response->assertRedirect("/book/{$book->id}");
 
     // Reload book data
     $book = $user->books()->get()[0];
@@ -167,7 +167,7 @@ test('no change on exporting and importing', function () {
             'book' => $file,
         ]);
 
-    $response->assertRedirect(route('book.edit', ['id' => $book->id]));
+    $response->assertRedirect("/book/{$book->id}");
 
     // Reload book data
     $book = $user->books()->get()[0];

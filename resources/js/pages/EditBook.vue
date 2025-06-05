@@ -13,29 +13,39 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { Book } from '@/types/book.d.ts';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 
-const page = usePage();
-const book = computed(() => page.props.book);
+const { book } = defineProps<{
+    status?: string;
+    book: Book;
+}>();
 
 const breadcrumbs = [
     {
-        title: book.value.title,
-        href: route('book.show', { id: book.value.id }),
+        title: book.title,
+        href: route('book.show', { id: book.id }),
     },
     {
         title: 'Edit',
-        href: route('book.edit', { id: book.value.id }),
+        href: route('book.edit', { id: book.id }),
     },
 ];
 
 const form = useForm({
-    title: book.value.title,
+    title: book.title,
 });
 
 const submit = () => {
-    form.patch(route('book.update', { id: book.value.id }));
+    form.patch(route('book.update', { id: book.id }));
+};
+
+const importForm = useForm({
+    book: null,
+});
+
+const submitImport = () => {
+    importForm.post(route('book.import', { id: book.id }));
 };
 </script>
 
@@ -43,6 +53,10 @@ const submit = () => {
     <Head :title="`${book.title} | Edit`" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
+        <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600">
+            {{ status }}
+        </div>
+
         <div class="m-4">
             <h1>Edit {{ book.title }}</h1>
 
@@ -57,13 +71,26 @@ const submit = () => {
                 </p>
             </form>
 
+            <h2>Import</h2>
+            <p>Update books with iCalendar journal data.</p>
+            <form class="mr-auto w-fit gap-2" @submit.prevent="submitImport">
+                <p class="grid gap-2">
+                    <Label for="book">iCalendar data</Label>
+                    <Input type="file" accept="text/calendar" name="book"
+                    @input="importForm.book = $event.target.files[0]" required />
+                </p>
+                <p>
+                    <Button type="submit">Import</Button>
+                </p>
+            </form>
+
             <h2>Export</h2>
             <p>Export notebooks regularly to avoid losing data.</p>
-            <div>
+            <p>
                 <Button as-child>
                     <a :href="route('book.export', { id: book.id })">Export as iCalendar</a>
                 </Button>
-            </div>
+            </p>
 
             <h2>Special Actions</h2>
             <Dialog>

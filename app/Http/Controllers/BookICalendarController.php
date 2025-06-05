@@ -35,13 +35,6 @@ class BookICalendarController extends Controller
         }, 'journal-export.ics');
     }
 
-    public function importForm(Request $request, string $id)
-    {
-        $book = $request->user()->books()->findOrFail($id);
-
-        return Inertia::render('ImportBook', ['book' => $book]);
-    }
-
     public function import(Request $request, string $id)
     {
         $book = $request->user()->books()->findOrFail($id);
@@ -72,6 +65,6 @@ class BookICalendarController extends Controller
             $record->save();
         }
 
-        return redirect()->route('book.edit', ['id' => $id]);
+        return redirect()->route('book.show', ['id' => $id]);
     }
 }
