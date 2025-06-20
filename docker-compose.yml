@@ -22,8 +22,8 @@ services:
         networks:
             - sail
         depends_on:
-            - pgsql
-    pgsql:
+            - work-log-pgsql
+    work-log-pgsql:
         image: 'postgres:17'
         environment:
             PGPASSWORD: '${DB_PASSWORD:-secret}'
