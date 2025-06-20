@@ -6,6 +6,7 @@ FROM php:8.2-fpm AS builder
 RUN apt-get update && apt-get install -y \
 	curl \
 	libpq-dev \
+	unzip \
 	&& docker-php-ext-install \
 	pdo_pgsql \
 	pgsql \
