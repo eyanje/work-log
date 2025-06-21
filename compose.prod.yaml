@@ -5,8 +5,6 @@ services:
       dockerfile: ./docker/nginx/Dockerfile
     depends_on:
       - work-log-php-fpm
-    ports:
-      - '${APP_PORT:-80}:80'
     restart: unless-stopped
 
   # Runs the backend PHP server
