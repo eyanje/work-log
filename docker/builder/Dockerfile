@@ -1,7 +1,7 @@
 FROM debian:bookworm
 
 RUN apt-get update \
-	&& apt-get install -y \
+	&& apt-get install -y --no-install-recommends \
 	composer \
 	curl \
 	libpq-dev \
@@ -12,8 +12,6 @@ RUN apt-get update \
 	php-redis \
 	unzip \
 	&& apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 COPY --chown=www-data:www-data . /var/www
