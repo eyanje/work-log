@@ -50,8 +50,12 @@ const submit = () => {
     // Add the start date from the client
     form.started_at = new Date();
 
-    form.post(route('book.append', { id: book.id }));
+    form.post(route('record.create', { bookId: book.id }));
     form.reset();
+};
+
+const deleteRecord = (bookId: number, recordId: number) => {
+    router.delete(route('record.delete', { bookId: bookId, recordId: recordId }));
 };
 
 const testAct = (id: number) => {
@@ -128,8 +132,7 @@ const bookmark = (book: Book) => {
                                     minute: '2-digit',
                                 })
                             }}</time>
-                            <div v-else>
-                            </div>
+                            <div v-else></div>
                         </td>
                         <td class="w-full">
                             {{ record.content }}
@@ -140,6 +143,7 @@ const bookmark = (book: Book) => {
                                     <Ellipsis class="size-5" />
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
+                                    <DropdownMenuItem @click="() => deleteRecord(book.id, record.id)">Delete</DropdownMenuItem>
                                     <DropdownMenuItem @click="() => testAct(record.id)"> Test action </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
