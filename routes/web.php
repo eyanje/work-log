@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookICalendarController;
+use App\Http\Controllers\RecordController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -22,14 +23,20 @@ Route::put('books', [BookController::class, 'create']
 Route::get('book/{id}', [BookController::class, 'show']
 )->middleware(['auth', 'verified'])->name('book.show');
 
-Route::post('book/{id}', [BookController::class, 'append']
-)->middleware(['auth', 'verified'])->name('book.append');
-
 Route::get('book/{id}/edit', [BookController::class, 'edit']
 )->middleware(['auth', 'verified'])->name('book.edit');
 
 Route::patch('book/{id}', [BookController::class, 'update']
 )->middleware(['auth', 'verified'])->name('book.update');
+
+// Editing records
+
+Route::post('book/{bookId}', [RecordController::class, 'create']
+)->middleware(['auth', 'verified'])->name('record.create');
+
+Route::delete('book/{bookId}/record/{recordId}', [RecordController::class, 'delete']
+)->middleware(['auth', 'verified'])->name('record.delete');
+
 
 // Deleting books
 
