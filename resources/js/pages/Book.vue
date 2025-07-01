@@ -97,12 +97,13 @@ const bookmark = (book: Book) => {
                 <Button>Log</Button>
             </form>
             <table>
-                <thead class="hidden">
+                <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Time</th>
+                        <th>Started</th>
+                        <th>Ended</th>
                         <th>Entry</th>
-                        <th>Actions</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -119,6 +120,16 @@ const bookmark = (book: Book) => {
                                     minute: '2-digit',
                                 })
                             }}</time>
+                        </td>
+                        <td class="text-sm text-gray-700">
+                            <time v-if="record.ended_at" class="text-nowrap">{{
+                                new Date(record.ended_at).toLocaleTimeString([], {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                })
+                            }}</time>
+                            <div v-else>
+                            </div>
                         </td>
                         <td class="w-full">
                             {{ record.content }}
