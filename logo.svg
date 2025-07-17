@@ -1,53 +1,73 @@
-<script setup lang="ts">
-import type { HTMLAttributes } from 'vue';
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-defineOptions({
-    inheritAttrs: false,
-});
-
-interface Props {
-    className?: HTMLAttributes['class'];
-}
-
-defineProps<Props>();
-</script>
-
-<template>
 <svg
-   width="494.45178"
-   height="494.45178"
-   viewBox="0 0 494.45178 494.45178"
+   width="512"
+   height="512"
+   viewBox="0 0 512 512"
    version="1.1"
    id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="0.21320159"
+     inkscape:cx="-21.106784"
+     inkscape:cy="304.87577"
+     inkscape:window-width="1920"
+     inkscape:window-height="970"
+     inkscape:window-x="0"
+     inkscape:window-y="37"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer3" />
   <defs
      id="defs2" />
   <g
-     id="g1172"
-     transform="translate(-8.7741127,-8.7741127)">
+     id="g1172">
     <g
        id="g1305"
+       inkscape:label="Background"
        style="fill:#3667aa;fill-opacity:1">
       <g
+         inkscape:groupmode="layer"
          id="layer2"
+         inkscape:label="Face"
          style="fill:#3667aa;fill-opacity:1">
-        <circle
+        <ellipse
            style="display:inline;fill:#3667aa;fill-opacity:1;stroke:#555555;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
            id="path1084"
+           inkscape:label="Face"
            cy="0"
            cx="0"
            transform="translate(256,256)"
-           r="150" />
+           rx="150"
+           ry="150" />
       </g>
       <g
+         inkscape:label="Petals"
+         inkscape:groupmode="layer"
          id="layer1"
-         style="fill:#3667aa;fill-opacity:1;stroke:#555555">
+         style="stroke:#555555;fill:#3667aa;fill-opacity:1">
         <path
            style="display:inline;fill:#3667aa;fill-opacity:1;stroke:none;stroke-width:18.687;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
            d="m -49.344934,-143.14469 c 0,0 60.206128,-104.49742 65.350594,-104.07995 5.144466,0.41747 31.226739,13.49516 32.640817,54.5521 1.414078,41.05693 -12.119257,46.3432 -12.119257,46.3432"
            id="path922"
+           sodipodi:nodetypes="czzc"
+           inkscape:label="Petal 0"
            transform="translate(256,256)" />
         <use
            x="0"
@@ -55,37 +75,43 @@ defineProps<Props>();
            xlink:href="#path922"
            id="use1032"
            transform="rotate(60,256,256)"
-           style="display:inline;fill:#3667aa;fill-opacity:1;stroke:#555555" />
+           inkscape:label="Petal 1"
+           style="stroke:#555555;display:inline;fill:#3667aa;fill-opacity:1" />
         <use
            x="0"
            y="0"
            xlink:href="#path922"
            id="use1034"
            transform="rotate(120,256,256)"
-           style="display:inline;fill:#3667aa;fill-opacity:1;stroke:#555555" />
+           inkscape:label="Petal 2"
+           style="stroke:#555555;display:inline;fill:#3667aa;fill-opacity:1" />
         <use
            x="0"
            y="0"
            xlink:href="#path922"
            id="use1036"
            transform="rotate(180,256,256)"
-           style="display:inline;fill:#3667aa;fill-opacity:1;stroke:#555555" />
+           inkscape:label="Petal 3"
+           style="stroke:#555555;display:inline;fill:#3667aa;fill-opacity:1" />
         <use
            x="0"
            y="0"
            xlink:href="#path922"
            id="use1038"
            transform="rotate(-120,256,256)"
-           style="display:inline;fill:#3667aa;fill-opacity:1;stroke:#555555" />
+           inkscape:label="Petal 4"
+           style="stroke:#555555;display:inline;fill:#3667aa;fill-opacity:1" />
         <use
            x="0"
            y="0"
            xlink:href="#path922"
            id="use1040"
            transform="rotate(-60,256,256)"
-           style="display:inline;fill:#3667aa;fill-opacity:1;stroke:#555555" />
+           inkscape:label="Petal 5"
+           style="stroke:#555555;display:inline;fill:#3667aa;fill-opacity:1" />
         <g
            id="g976"
+           inkscape:label="Subpetals"
            style="display:inline;fill:#3667aa;fill-opacity:1;stroke:#555555"
            transform="translate(256,256)">
           <use
@@ -93,6 +119,7 @@ defineProps<Props>();
              y="0"
              xlink:href="#path922"
              id="use958"
+             inkscape:label="Petal 6"
              transform="rotate(30,605.7025,-349.7025)"
              style="fill:#3667aa;fill-opacity:1" />
           <use
@@ -100,6 +127,7 @@ defineProps<Props>();
              y="0"
              xlink:href="#path922"
              id="use960"
+             inkscape:label="Petal 7"
              transform="rotate(90,256,0)"
              style="fill:#3667aa;fill-opacity:1" />
           <use
@@ -107,6 +135,7 @@ defineProps<Props>();
              y="0"
              xlink:href="#path922"
              id="use962"
+             inkscape:label="Petal 8"
              transform="rotate(150,162.2975,93.702503)"
              style="fill:#3667aa;fill-opacity:1" />
           <use
@@ -114,6 +143,7 @@ defineProps<Props>();
              y="0"
              xlink:href="#path922"
              id="use964"
+             inkscape:label="Petal 9"
              transform="rotate(-150,93.702503,162.2975)"
              style="fill:#3667aa;fill-opacity:1" />
           <use
@@ -121,6 +151,7 @@ defineProps<Props>();
              y="0"
              xlink:href="#path922"
              id="use966"
+             inkscape:label="Petal 10"
              transform="rotate(-90,0,256)"
              style="fill:#3667aa;fill-opacity:1" />
           <use
@@ -128,48 +159,76 @@ defineProps<Props>();
              y="0"
              xlink:href="#path922"
              id="use968"
+             inkscape:label="Petal 11"
              transform="rotate(-30,-349.7025,605.7025)"
              style="fill:#3667aa;fill-opacity:1" />
         </g>
       </g>
     </g>
     <g
+       inkscape:groupmode="layer"
        id="layer3"
+       inkscape:label="Rings"
        style="stroke:#ffffff">
       <g
          id="g847"
+         inkscape:label="Outer ring"
          transform="translate(256,256)">
         <path
            style="display:inline;fill:#c9c9c9;fill-opacity:0;stroke-width:39.6;stroke-linecap:butt;stroke-dasharray:none;stroke-opacity:1"
            id="path2069"
-           d="m 18.025094,-102.22539 a 103.80238,103.80238 0 0 1 71.870407,50.324198 103.80238,103.80238 0 0 1 7.646833,87.403698" />
+           sodipodi:type="arc"
+           sodipodi:cx="0"
+           sodipodi:cy="0"
+           sodipodi:rx="103.80238"
+           sodipodi:ry="103.80238"
+           sodipodi:start="4.8869219"
+           sodipodi:end="0.34906585"
+           sodipodi:open="true"
+           sodipodi:arc-type="arc"
+           d="m 18.025094,-102.22539 a 103.80238,103.80238 0 0 1 71.870407,50.324198 103.80238,103.80238 0 0 1 7.646833,87.403698"
+           inkscape:label="Segment 1" />
         <use
            x="0"
            y="0"
            xlink:href="#path2069"
            id="use2228"
            transform="rotate(120)"
+           inkscape:label="Segment 2"
            style="display:inline" />
         <use
            x="0"
            y="0"
            xlink:href="#path2069"
            id="use2230"
-           transform="rotate(-120)" />
+           transform="rotate(240)"
+           inkscape:label="Segment 3" />
       </g>
       <g
          id="use849"
+         inkscape:label="Inner ring"
          transform="translate(256,256)">
         <path
            style="display:inline;fill:#c9c9c9;fill-opacity:0;stroke-width:20;stroke-linecap:butt;stroke-dasharray:none;stroke-opacity:1"
            id="path396"
-           d="m -3.1837812,-48.824581 a 48.928276,48.928276 0 0 1 44.5747082,22.733063 48.928276,48.928276 0 0 1 1.286755,50.020406" />
+           sodipodi:type="arc"
+           sodipodi:cx="0"
+           sodipodi:cy="0"
+           sodipodi:rx="48.928276"
+           sodipodi:ry="48.928276"
+           sodipodi:start="4.6472726"
+           sodipodi:end="0.51101235"
+           sodipodi:open="true"
+           sodipodi:arc-type="arc"
+           d="m -3.1837812,-48.824581 a 48.928276,48.928276 0 0 1 44.5747082,22.733063 48.928276,48.928276 0 0 1 1.286755,50.020406"
+           inkscape:label="Segment 1" />
         <use
            x="0"
            y="0"
            xlink:href="#path396"
            id="use398"
            transform="rotate(170)"
+           inkscape:label="Segment 2"
            style="display:inline" />
         <use
            x="0"
@@ -177,9 +236,9 @@ defineProps<Props>();
            xlink:href="#path396"
            id="use400"
            transform="rotate(-120)"
+           inkscape:label="Segment 3"
            style="display:none" />
       </g>
     </g>
   </g>
 </svg>
-</template>
