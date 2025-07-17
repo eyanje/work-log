@@ -143,6 +143,9 @@ const bookmark = (book: Book) => {
                                     <Ellipsis class="size-5" />
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
+                                    <Link :href="route('record.edit', { bookId: book.id, recordId: record.id })" as-child>
+                                        <DropdownMenuItem> Edit </DropdownMenuItem>
+                                    </Link>
                                     <DropdownMenuItem @click="() => deleteRecord(book.id, record.id)">Delete</DropdownMenuItem>
                                     <DropdownMenuItem @click="() => testAct(record.id)"> Test action </DropdownMenuItem>
                                 </DropdownMenuContent>

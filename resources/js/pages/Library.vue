@@ -2,7 +2,7 @@
 import TextLink from '@/components/TextLink.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { Book } from '@/types/book.d.ts';
-import { usePage } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 
 const { status, books } = defineProps<{
     status?: string;
@@ -20,6 +20,7 @@ const breadcrumbs = [
 </script>
 
 <template>
+    <Head title="Library" />
     <AppLayout :breadcrumbs="breadcrumbs">
         {{ status }}
         <div class="mr-auto w-auto p-4">
