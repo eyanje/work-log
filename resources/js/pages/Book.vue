@@ -58,10 +58,6 @@ const deleteRecord = (bookId: number, recordId: number) => {
     router.delete(route('record.delete', { bookId: bookId, recordId: recordId }));
 };
 
-const testAct = (id: number) => {
-    console.log(`Test action for ${id}`);
-};
-
 const bookmark = (book: Book) => {
     if (book.bookmarked) {
         router.delete(route('book.unbookmark', { id: book.id }));
@@ -144,7 +140,6 @@ const bookmark = (book: Book) => {
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
                                     <DropdownMenuItem @click="() => deleteRecord(book.id, record.id)">Delete</DropdownMenuItem>
-                                    <DropdownMenuItem @click="() => testAct(record.id)"> Test action </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </td>
