@@ -2,7 +2,7 @@ services:
   work-log-web:
     build:
       context: .
-      dockerfile: ./docker/nginx/Dockerfile
+      dockerfile: ./docker/web/Dockerfile
     depends_on:
       - work-log-php-fpm
     restart: unless-stopped
@@ -18,7 +18,7 @@ services:
       work-log-redis:
         condition: service_healthy
     env_file:
-      - .env
+      - '${ENV_FILE:-.env}'
     restart: unless-stopped
 
   work-log-pgsql:

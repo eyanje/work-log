@@ -1,7 +1,10 @@
 # Based on the instructions in
 # https://docs.docker.com/guides/frameworks/laravel/production-setup/
 
-FROM work-log-builder AS builder
+ARG REPOSITORY
+ARG BUILDER_TAG=latest
+
+FROM work-log-builder:${BUILDER_TAG} AS builder
 
 RUN apt-get update && apt-get install -y \
 	php-fpm

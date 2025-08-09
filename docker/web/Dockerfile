@@ -1,7 +1,10 @@
 # nginx Dockerfile
 # The nginx container is responsible for serving static content and JavaScript files.
 
-FROM work-log-builder AS builder
+ARG REPOSITORY
+ARG BUILDER_TAG=latest
+
+FROM ${REPOSITORY}/work-log-builder:${BUILDER_TAG} AS builder
 
 # Server
 # Serves the built index.php and JS files
