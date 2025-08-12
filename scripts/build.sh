@@ -10,6 +10,12 @@ docker build \
 docker build \
 	--build-arg REPOSITORY=$REPOSITORY \
 	--build-arg BUILDER_TAG=$TAG \
+	-t $REPOSITORY/work-log-migration:$TAG \
+	-t $REPOSITORY/work-log-migration:latest \
+	-f ./docker/migration/Dockerfile .
+docker build \
+	--build-arg REPOSITORY=$REPOSITORY \
+	--build-arg BUILDER_TAG=$TAG \
 	-t $REPOSITORY/work-log-web:$TAG \
 	-t $REPOSITORY/work-log-web:latest \
 	-f ./docker/web/Dockerfile .

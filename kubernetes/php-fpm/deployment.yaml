@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: work-log-php-fpm
+  labels:
+    app.kubernetes.io/name: work-log
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: work-log
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: work-log
+      app.kubernetes.io/component: backend
+      app.kubernetes.io/part-of: work-log
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: work-log
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/part-of: work-log
+    spec:
+      containers:
+        - name: php-fpm
+          image: harbor.eyanje.net/work-log/work-log-php-fpm:latest
+          ports:
+            - containerPort: 9000
+              name: php-fpm
+          envFrom:
+            - configMapRef:
+                name: work-log-configmap
+            - secretRef:
+                name: work-log-secret
+...

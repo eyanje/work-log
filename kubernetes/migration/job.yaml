@@ -1,0 +1,28 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: work-log-migration
+  labels:
+    app.kubernetes.io/name: work-log
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: work-log
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: work-log
+        app.kubernetes.io/component: database
+        app.kubernetes.io/part-of: work-log
+    spec:
+      containers:
+        - name: migration
+          image: harbor.eyanje.net/work-log/work-log-migration:latest
+          envFrom:
+            - configMapRef:
+                name: work-log-configmap
+            - secretRef:
+                name: work-log-secret
+      restartPolicy: OnFailure
+  ttlSecondsAfterFinished: 0
+...

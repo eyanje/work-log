@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: work-log-pgsql
+  labels:
+    app.kubernetes.io/name: work-log
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: work-log
+spec:
+  selector:
+    app.kubernetes.io/name: work-log
+    app.kubernetes.io/part-of: work-log
+    app.kubernetes.io/component: database
+  ports:
+    - name: pgsql
+      protocol: TCP
+      port: 5432
+      targetPort: postgres
+...

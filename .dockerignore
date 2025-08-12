@@ -1,0 +1,9 @@
+.env
+.env.example
+.env.secret
+
+kubernetes/
+node_modules/
+public/build
+strorage/
+vendor/

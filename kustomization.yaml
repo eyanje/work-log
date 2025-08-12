@@ -1,0 +1,21 @@
+generatorOptions:
+  labels:
+    app.kubernetes.io/name: work-log
+    app.kubernetes.io/part-of: work-log
+configMapGenerator:
+  - name: work-log-configmap
+    envs:
+      - .env
+secretGenerator:
+  - name: work-log-secret
+    envs:
+      - .env
+resources:
+  - kubernetes/ingress/ingress.yaml
+  - kubernetes/migration/job.yaml
+  - kubernetes/pgsql/service.yaml
+  - kubernetes/pgsql/statefulset.yaml
+  - kubernetes/php-fpm/deployment.yaml
+  - kubernetes/php-fpm/service.yaml
+  - kubernetes/web/deployment.yaml
+  - kubernetes/web/service.yaml
