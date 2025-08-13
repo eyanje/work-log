@@ -4,25 +4,25 @@ REPOSITORY=harbor.eyanje.net/work-log
 TAG=$(git rev-parse HEAD)
 
 docker build \
-	-t $REPOSITORY/work-log-builder:$TAG \
-	-t $REPOSITORY/work-log-builder:latest \
-	-f ./docker/builder/Dockerfile .
+	-t $REPOSITORY/base:$TAG \
+	-t $REPOSITORY/base:latest \
+	-f ./docker/base/Dockerfile .
 docker build \
 	--build-arg REPOSITORY=$REPOSITORY \
-	--build-arg BUILDER_TAG=$TAG \
-	-t $REPOSITORY/work-log-migration:$TAG \
-	-t $REPOSITORY/work-log-migration:latest \
+	--build-arg BASE_TAG=$TAG \
+	-t $REPOSITORY/migration:$TAG \
+	-t $REPOSITORY/migration:latest \
 	-f ./docker/migration/Dockerfile .
 docker build \
 	--build-arg REPOSITORY=$REPOSITORY \
-	--build-arg BUILDER_TAG=$TAG \
-	-t $REPOSITORY/work-log-web:$TAG \
-	-t $REPOSITORY/work-log-web:latest \
+	--build-arg BASE_TAG=$TAG \
+	-t $REPOSITORY/web:$TAG \
+	-t $REPOSITORY/web:latest \
 	-f ./docker/web/Dockerfile .
 docker build \
 	--build-arg REPOSITORY=$REPOSITORY \
-	--build-arg BUILDER_TAG=$TAG \
-	-t $REPOSITORY/work-log-php-fpm:$TAG \
-	-t $REPOSITORY/work-log-php-fpm:latest \
+	--build-arg BASE_TAG=$TAG \
+	-t $REPOSITORY/php-fpm:$TAG \
+	-t $REPOSITORY/php-fpm:latest \
 	-f ./docker/php-fpm/Dockerfile .
 

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: migration
-          image: harbor.eyanje.net/work-log/work-log-migration:latest
+          image: harbor.eyanje.net/work-log/migration:latest
           envFrom:
             - configMapRef:
                 name: work-log-configmap

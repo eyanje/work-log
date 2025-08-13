@@ -2,14 +2,20 @@
 # https://docs.docker.com/guides/frameworks/laravel/production-setup/
 
 ARG REPOSITORY
-ARG BUILDER_TAG=latest
+ARG BASE_TAG=latest
 
-FROM work-log-builder:${BUILDER_TAG} AS builder
+FROM ${REPOSITORY}/base:${BASE_TAG}
 
 RUN apt-get update && apt-get install -y \
+    libfcgi-bin \
 	php-fpm
 
-COPY ./docker/php-fpm/www.conf /etc/php/8.2/fpm/pool.d/www.conf
+COPY ./docker/php-fpm/www.conf /etc/php/8.4/fpm/pool.d/www.conf
+
+RUN curl \
+    https://raw.githubusercontent.com/renatomefi/php-fpm-healthcheck/refs/heads/master/php-fpm-healthcheck \
+    -o /usr/local/bin/php-fpm-healthcheck
+RUN chmod a+x /usr/local/bin/php-fpm-healthcheck
 
 EXPOSE 9000
-CMD ["php-fpm8.2", "-F"]
+CMD ["php-fpm8.4", "-F"]

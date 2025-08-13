@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: harbor.eyanje.net/work-log/work-log-web:latest
+          image: harbor.eyanje.net/work-log/web:latest
           ports:
             - containerPort: 80
               name: http

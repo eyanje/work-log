@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: php-fpm
-          image: harbor.eyanje.net/work-log/work-log-php-fpm:latest
+          image: harbor.eyanje.net/work-log/php-fpm:latest
           ports:
             - containerPort: 9000
               name: php-fpm
@@ -31,4 +31,8 @@ spec:
                 name: work-log-configmap
             - secretRef:
                 name: work-log-secret
+          readinessProbe:
+            exec:
+              command:
+                - php-fpm-healthcheck
 ...

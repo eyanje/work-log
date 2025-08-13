@@ -3,10 +3,10 @@
 REPOSITORY=harbor.eyanje.net/work-log
 TAG=$(git rev-parse HEAD)
 
-docker image push $REPOSITORY/work-log-migration:$TAG
-docker image push $REPOSITORY/work-log-migration:latest
-docker image push $REPOSITORY/work-log-web:$TAG
-docker image push $REPOSITORY/work-log-web:latest
-docker image push $REPOSITORY/work-log-php-fpm:$TAG
-docker image push $REPOSITORY/work-log-php-fpm:latest
+docker image push $REPOSITORY/migration:$TAG
+docker image push $REPOSITORY/migration:latest
+docker image push $REPOSITORY/php-fpm:$TAG
+docker image push $REPOSITORY/php-fpm:latest
+docker image push $REPOSITORY/web:$TAG
+docker image push $REPOSITORY/web:latest
 

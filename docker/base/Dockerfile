@@ -1,4 +1,4 @@
-FROM docker.io/debian:bookworm
+FROM docker.io/debian:trixie-slim
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \

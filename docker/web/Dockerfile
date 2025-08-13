@@ -2,9 +2,9 @@
 # The nginx container is responsible for serving static content and JavaScript files.
 
 ARG REPOSITORY
-ARG BUILDER_TAG=latest
+ARG BASE_TAG=latest
 
-FROM ${REPOSITORY}/work-log-builder:${BUILDER_TAG} AS builder
+FROM ${REPOSITORY}/base:${BASE_TAG} AS builder
 
 # Server
 # Serves the built index.php and JS files
