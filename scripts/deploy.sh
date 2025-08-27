@@ -1,3 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 
-docker compose -f compose.prod.yaml -f compose.override.prod.yaml --env-file .env up
+cp "$ENV_FILE" .env
+kubectl apply -k .
