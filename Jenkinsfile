@@ -21,7 +21,17 @@ pipeline {
 		}
 		stage('Test') {
             agent {
-                docker { image 'harbor.eyanje.net/work-log/base:latest' }
+                kubernetes {
+                    cloud 'kubernetes'
+                    yaml '''
+                        spec:
+                          containers:
+                            - image: harbor.eyanje.net/work-log-base:latest
+                              imagePullPolicy: Never
+                              name: alpine
+                              restartPolicy: Always
+                        '''
+                }
             }
 			steps {
 				echo 'Test'
