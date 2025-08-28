@@ -1,8 +1,16 @@
 pipeline {
     agent {
-        docker { image 'docker.io/alpine:latest' }
+        kubernetes {
+            cloud 'kubernetes'
+            yaml '''
+                spec:
+                  containers:
+                    - image: docker.io/alpine:latest
+                      name: alpine
+                      restartPolicy: Always
+                '''
+        }
     }
-	agent any
 
 	stages {
 		stage('Build') {
