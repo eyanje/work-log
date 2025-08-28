@@ -7,7 +7,6 @@ pipeline {
                   containers:
                     - image: docker.io/alpine:latest
                       name: alpine
-                      restartPolicy: Always
                 '''
         }
     }
@@ -29,7 +28,6 @@ pipeline {
                             - image: harbor.eyanje.net/work-log-base:latest
                               imagePullPolicy: Never
                               name: alpine
-                              restartPolicy: Always
                         '''
                 }
             }
