@@ -1,8 +1,15 @@
-#!/usr/bin/sh
+#!/bin/sh
+
+# https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error#2871034
+set -e
 
 REPOSITORY=harbor.eyanje.net/work-log
 TAG=$(git rev-parse HEAD)
 
+docker build \
+	-t $REPOSITORY/build-agent:$TAG \
+	-t $REPOSITORY/build-agent:latest \
+	-f ./docker/build-agent/Dockerfile .
 docker build \
 	-t $REPOSITORY/base:$TAG \
 	-t $REPOSITORY/base:latest \
