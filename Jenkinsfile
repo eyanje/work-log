@@ -5,8 +5,13 @@ pipeline {
             yaml '''
                 spec:
                   containers:
-                    - image: docker.io/alpine:latest
-                      name: alpine
+                    - image: harbor.eyanje.net/work-log/build-agent:latest
+                      name: jnlp
+                      securityContext:
+                        privileged: true
+                        runAsUser: 1000
+                  securityContext:
+                    hostNetwork: true
                 '''
         }
     }
@@ -27,7 +32,11 @@ pipeline {
                           containers:
                             - image: harbor.eyanje.net/work-log-base:latest
                               imagePullPolicy: Never
-                              name: alpine
+                              name: base
+                              command:
+                                - sleep
+                              args:
+                                - 99d
                         '''
                 }
             }
@@ -54,3 +63,4 @@ pipeline {
 		}
 	}
 }
+
