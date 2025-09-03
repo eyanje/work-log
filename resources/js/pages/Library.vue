@@ -36,7 +36,7 @@ const breadcrumbs = [
     </AppLayout>
 </template>
 
-<style>
+<style scoped>
 a {
 }
 

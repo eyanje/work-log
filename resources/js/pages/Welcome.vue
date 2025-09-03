@@ -24,8 +24,7 @@ import { Head, Link } from '@inertiajs/vue3';
         <main class="w-full">
             <div class="flex flex-col">
                 <div>
-                    <img src="/front-banner.svg"
-                    class="w-full aspect-3/2 border-6" />
+                    <img src="/front-banner.svg" class="aspect-3/2 w-full border-6" />
                 </div>
                 <div class="p-4">
                     <h1>Work Log</h1>
@@ -39,7 +38,7 @@ import { Head, Link } from '@inertiajs/vue3';
     </div>
 </template>
 
-<style>
+<style scoped>
 h1 {
     font-weight: bold;
     font-size: xx-large;

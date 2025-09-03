@@ -112,7 +112,7 @@ const submitImport = () => {
     </AppLayout>
 </template>
 
-<style>
+<style scoped>
 h1 {
     margin-bottom: calc(var(--spacing) * 6);
     font-size: xx-large;

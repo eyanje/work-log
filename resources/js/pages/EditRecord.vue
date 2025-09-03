@@ -64,7 +64,7 @@ const submit = () => {
     </AppLayout>
 </template>
 
-<style>
+<style scoped>
 h1 {
     font-weight: bold;
     font-size: x-large;

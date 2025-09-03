@@ -150,7 +150,7 @@ const bookmark = (book: Book) => {
     </AppLayout>
 </template>
 
-<style>
+<style scoped>
 th,
 td {
     padding-left: calc(var(--spacing) * 2);
