@@ -37,9 +37,6 @@ const breadcrumbs = [
 </template>
 
 <style scoped>
-a {
-}
-
 th {
     text-align: left;
 }

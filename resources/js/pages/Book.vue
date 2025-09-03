@@ -19,7 +19,7 @@ const { status, book, records } = defineProps<{
 
 const recordsWithDate = computed(() => {
     // Add the showDate boolean field
-    let lastDate = null;
+    let lastDate: string | null = null;
     return records.map((record) => {
         const recordDate = new Date(record.started_at).toLocaleDateString();
         const showDate = lastDate != recordDate;
@@ -40,7 +40,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const form = useForm({
     content: '',
-    started_at: null,
+    started_at: null as Date | null,
 });
 
 const submit = () => {

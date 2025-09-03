@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button';
+import { Auth } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
+
+interface Props {
+    auth: Auth;
+}
+
+const { auth } = defineProps<Props>();
 </script>
 
 <template>
@@ -8,7 +15,7 @@ import { Head, Link } from '@inertiajs/vue3';
     <div class="mx-auto flex min-h-screen max-w-2xl flex-col items-center p-6">
         <header class="mb-6 w-full">
             <nav class="flex items-center justify-end gap-4">
-                <Button as-child v-if="$page.props.auth.user">
+                <Button as-child v-if="auth.user">
                     <Link :href="route('library')"> Library </Link>
                 </Button>
                 <template v-else>
