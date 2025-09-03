@@ -4,7 +4,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import type { Book } from '@/types/book.d.ts';
+import type { Book, Record } from '@/types/book.d.ts';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
 import { Bookmark, Ellipsis, Pencil } from 'lucide-vue-next';
 import { computed } from 'vue';
@@ -14,10 +14,7 @@ const page = usePage();
 const { status, book, records } = defineProps<{
     status?: string;
     book: Book;
-    records: {
-        started_at: string;
-        ended_at?: string;
-    }[];
+    records: Record[];
 }>();
 
 const recordsWithDate = computed(() => {
@@ -34,7 +31,7 @@ const recordsWithDate = computed(() => {
     });
 });
 
-const breadcrumbs: BreadcrumbItem = [
+const breadcrumbs: BreadcrumbItem[] = [
     {
         title: book.title,
         href: page.url,
@@ -139,6 +136,9 @@ const bookmark = (book: Book) => {
                                     <Ellipsis class="size-5" />
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
+                                    <DropdownMenuItem as-child
+                                        ><Link :href="route('record.edit', { bookId: book.id, recordId: record.id })">Edit</Link></DropdownMenuItem
+                                    >
                                     <DropdownMenuItem @click="() => deleteRecord(book.id, record.id)">Delete</DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
