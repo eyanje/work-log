@@ -24,25 +24,9 @@ pipeline {
 			}
 		}
 		stage('Test') {
-            agent {
-                kubernetes {
-                    cloud 'kubernetes'
-                    yaml '''
-                        spec:
-                          containers:
-                            - image: harbor.eyanje.net/work-log-base:latest
-                              imagePullPolicy: Never
-                              name: base
-                              command:
-                                - sleep
-                              args:
-                                - 99d
-                        '''
-                }
-            }
 			steps {
 				echo 'Test'
-				sh 'php artisan test'
+				sh './scripts/test.sh'
 			}
 		}
 		stage('Publish') {
