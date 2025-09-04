@@ -32,6 +32,9 @@ pipeline {
 		stage('Publish') {
 			steps {
 				echo 'Publishing'
+				withCredentials([usernamePassword(credentialsId: 'work-log-registry', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+    				sh 'docker login -u=$USERNAME -p=$PASSWORD harbor.eyanje.net'
+				}
 				sh './scripts/publish.sh'
 			}
 		}
