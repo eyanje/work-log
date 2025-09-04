@@ -40,12 +40,11 @@ pipeline {
 		}
 		stage('Deploy') {
             environment {
-                ENV_FILE =
-                credentials('work-log-production-environment')
+                ENV_FILE = credentials('work-log-environment')
             }
 			steps {
 				echo 'Deploying'
-				ansiblePlaybook './scripts/deploy.sh'
+				sh './scripts/deploy.sh'
 			}
 		}
 	}
