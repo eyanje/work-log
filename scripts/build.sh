@@ -20,6 +20,13 @@ docker build \
     --network host \
 	--build-arg REPOSITORY=$REPOSITORY \
 	--build-arg BASE_TAG=$TAG \
+	-t $REPOSITORY/development:$TAG \
+	-t $REPOSITORY/development:latest \
+	-f ./docker/development/Dockerfile .
+docker build \
+    --network host \
+	--build-arg REPOSITORY=$REPOSITORY \
+	--build-arg BASE_TAG=$TAG \
 	-t $REPOSITORY/migration:$TAG \
 	-t $REPOSITORY/migration:latest \
 	-f ./docker/migration/Dockerfile .
