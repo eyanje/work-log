@@ -6,14 +6,10 @@ set -e
 REPOSITORY=harbor.eyanje.net/work-log
 TAG=$(git rev-parse HEAD)
 
-docker image push $REPOSITORY/build-agent:$TAG
 docker image push $REPOSITORY/build-agent:latest
-docker image push $REPOSITORY/base:$TAG
 docker image push $REPOSITORY/base:latest
-docker image push $REPOSITORY/migration:$TAG
+docker image push $REPOSITORY/development:latest
 docker image push $REPOSITORY/migration:latest
-docker image push $REPOSITORY/php-fpm:$TAG
 docker image push $REPOSITORY/php-fpm:latest
-docker image push $REPOSITORY/web:$TAG
 docker image push $REPOSITORY/web:latest
 
