@@ -14,10 +14,17 @@ RUN apt-get update \
 	&& apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /var/www
+
+COPY --chown=www-data:www-data composer.json /var/www/
+COPY --chown=www-data:www-data composer.lock /var/www/
+
+RUN composer install --no-dev --no-scripts --optimize-autoloader \
+    --no-interaction --no-progress --prefer-dist
+
 COPY --chown=www-data:www-data . /var/www
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction \
-		--no-progress --prefer-dist
+RUN composer install --no-dev --no-interaction \
+    --no-progress --prefer-dist
 
 RUN npm install && npm run build
 
