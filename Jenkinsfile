@@ -20,7 +20,10 @@ pipeline {
 		stage('Build') {
 			steps {
 				echo 'Building'
-				sh './scripts/build.sh'
+				withCredentials([usernamePassword(credentialsId: 'work-log-registry', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+    				sh 'docker login -u=$USERNAME -p=$PASSWORD harbor.eyanje.net'
+				}
+				sh './scripts/build.sh --registry-cache'
 			}
 		}
 		stage('Test') {
@@ -44,9 +47,12 @@ pipeline {
             }
 			steps {
 				echo 'Deploying'
-				sh './scripts/deploy.sh'
+				withKubeConfig(credentialsId: 'work-log-kube-config', restrictKubeConfigAccess: true) {
+				    sh './scripts/deploy.sh'
+				}
 			}
 		}
 	}
 }
+
 
