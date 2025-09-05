@@ -47,7 +47,7 @@ pipeline {
             }
 			steps {
 				echo 'Deploying'
-				withKubeConfig(credentialsId: 'work-log-kube-config', restrictKubeConfigAccess: true) {
+				withKubeConfig(credentialsId: 'work-log-kube-config', namespace: 'default', restrictKubeConfigAccess: true) {
 				    sh './scripts/deploy.sh'
 				}
 			}
