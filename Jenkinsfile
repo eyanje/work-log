@@ -23,13 +23,13 @@ pipeline {
 				withCredentials([usernamePassword(credentialsId: 'work-log-registry', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
     				sh 'docker login -u=$USERNAME -p=$PASSWORD harbor.eyanje.net'
 				}
-				sh './scripts/build.sh --registry-cache'
+				sh 'make -j 4'
 			}
 		}
 		stage('Test') {
 			steps {
 				echo 'Test'
-				sh './scripts/test.sh'
+				sh 'make test'
 			}
 		}
 		stage('Publish') {
@@ -38,7 +38,7 @@ pipeline {
 				withCredentials([usernamePassword(credentialsId: 'work-log-registry', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
     				sh 'docker login -u=$USERNAME -p=$PASSWORD harbor.eyanje.net'
 				}
-				sh './scripts/publish.sh'
+				sh 'make push -j 8'
 			}
 		}
 		stage('Deploy') {
