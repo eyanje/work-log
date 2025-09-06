@@ -17,8 +17,6 @@ IMAGES += migration
 IMAGES += php-fpm
 IMAGES += web
 
-FORCE:
-
 # Build
 
 BUILD_TARGETS = $(addsuffix .image,$(IMAGES))
@@ -54,3 +52,8 @@ push: $(PUSH_TARGETS)
 
 %.push: # %.image test
 	$(DRIVER) image push $(REPOSITORY)/$*\:latest
+
+# Force rebuild without PHONY
+
+FORCE:
+
