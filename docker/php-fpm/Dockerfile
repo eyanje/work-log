@@ -13,5 +13,10 @@ RUN apt-get update && apt-get install -y \
 COPY ./docker/php-fpm/php-fpm.conf /etc/php/8.4/fpm/php-fpm.conf
 COPY ./docker/php-fpm/www.conf /etc/php/8.4/fpm/pool.d/www.conf
 
+RUN curl \
+    https://raw.githubusercontent.com/renatomefi/php-fpm-healthcheck/refs/heads/master/php-fpm-healthcheck \
+    -o /usr/local/bin/php-fpm-healthcheck
+RUN chmod a+x /usr/local/bin/php-fpm-healthcheck
+
 EXPOSE 9000
 CMD ["php-fpm8.4", "-F"]

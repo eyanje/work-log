@@ -32,7 +32,7 @@ spec:
             - secretRef:
                 name: work-log-secret
           readinessProbe:
-            httpGet:
-              path: /ping
-              port: 9000
+            exec:
+              command:
+                - php-fpm-healthcheck
 ...
