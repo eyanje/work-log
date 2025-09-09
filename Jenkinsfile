@@ -1,4 +1,11 @@
 pipeline {
+    agent {
+        kubernetes {
+            cloud 'kubernetes'
+            yaml readFile('jenkins/build-agent.yaml')
+        }
+    }
+
     stages {
         stage('Create build cache') {
             agent {
