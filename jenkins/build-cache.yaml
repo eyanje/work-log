@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: work-log-build-cache
+  labels:
+    app.kubernetes.io/name: work-log
+    app.kubernetes.io/part-of: work-log
+spec:
+  accessModes: ["ReadWriteOncePod"]
+  resources:
+    requests:
+      storage: 4Gi

@@ -1,0 +1,4 @@
+spec:
+  containers:
+    - image: harbor.eyanje.net/work-log/build-agent:latest
+      name: jnlp
