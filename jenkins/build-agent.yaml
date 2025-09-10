@@ -4,7 +4,7 @@ spec:
       image: docker.io/alpine:latest
       command:
         - chown
-        - "jenkins:jenkins"
+        - "1000:1000"
         - "/home/jenkins/.local/share/containers"
       volumeMounts:
         - mountPath: /home/jenkins/.local/share/containers
