@@ -3,7 +3,7 @@ spec:
     - image: harbor.eyanje.net/work-log/build-agent:latest
       name: jnlp
       volumeMounts:
-        - mountPath: /jenkins/.local/share/containers
+        - mountPath: /home/jenkins/.local/share/containers
           name: build-cache
       securityContext:
         privileged: true
