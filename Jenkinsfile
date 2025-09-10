@@ -2,22 +2,16 @@ pipeline {
     agent {
         kubernetes {
             cloud 'kubernetes'
-            yaml readFile('jenkins/build-agent.yaml')
+            yamlFile 'jenkins/build-agent-minimal.yaml'
         }
     }
 
     stages {
         stage('Create build cache') {
-            agent {
-                kubernetes {
-                    cloud 'kubernetes'
-                    yaml readFile('jenkins/build-agent-minimal.yaml')
-                }
-            }
             steps {
                 echo 'Creating build cache volume'
                 withKubeConfig(credentialsId: 'work-log-kube-config', restrictKubeConfigAccess: true) {
-                    sh 'kubectl create -f jenkins/build-cache.yaml'
+                    sh 'kubectl apply -f jenkins/build-cache.yaml'
                 }
             }
         }
@@ -26,7 +20,7 @@ pipeline {
             agent {
                 kubernetes {
                     cloud 'kubernetes'
-                    yaml readFile('jenkins/build-agent.yaml')
+                    yamlFile 'jenkins/build-agent.yaml'
                 }
             }
 
@@ -42,7 +36,7 @@ pipeline {
             agent {
                 kubernetes {
                     cloud 'kubernetes'
-                    yaml readFile('jenkins/build-agent.yaml')
+                    yamlFile 'jenkins/build-agent.yaml'
                 }
             }
             steps {
@@ -54,7 +48,7 @@ pipeline {
             agent {
                 kubernetes {
                     cloud 'kubernetes'
-                    yaml readFile('jenkins/build-agent.yaml')
+                    yamlFile 'jenkins/build-agent.yaml'
                 }
             }
             steps {
@@ -69,7 +63,7 @@ pipeline {
             agent {
                 kubernetes {
                     cloud 'kubernetes'
-                    yaml readFile('jenkins/build-agent.yaml')
+                    yamlFile 'jenkins/build-agent.yaml'
                 }
             }
             environment {
@@ -84,5 +78,6 @@ pipeline {
         }
     }
 }
+
 
 
