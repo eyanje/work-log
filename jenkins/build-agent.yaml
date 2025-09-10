@@ -1,7 +1,17 @@
 spec:
+  initContainers:
+    - name: init-cache
+      image: docker.io/alpine:latest
+      command:
+        - chown
+        - "jenkins:jenkins"
+        - "/home/jenkins/.local/share/containers"
+      volumeMounts:
+        - mountPath: /home/jenkins/.local/share/containers
+          name: build-cache
   containers:
-    - image: harbor.eyanje.net/work-log/build-agent:latest
-      name: jnlp
+    - name: jnlp
+      image: harbor.eyanje.net/work-log/build-agent:latest
       volumeMounts:
         - mountPath: /home/jenkins/.local/share/containers
           name: build-cache
