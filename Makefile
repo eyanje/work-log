@@ -7,8 +7,6 @@ BUILD = $(DRIVER) build
 BUILD_ARGS += --network host
 BUILD_ARGS += --build-arg REPOSITORY=$(REPOSITORY)
 BUILD_ARGS += --build-arg BASE_TAG=$(TAG)
-BUILD_ARGS += --cache-from=$(REPOSITORY)/build-cache
-BUILD_ARGS += --cache-to=$(REPOSITORY)/build-cache
 
 IMAGES += build-agent
 IMAGES += base

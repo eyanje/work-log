@@ -51,6 +51,9 @@ pipeline {
                     yamlFile 'jenkins/build-agent.yaml'
                 }
             }
+            options {
+                retry(3)
+            }
             steps {
                 echo 'Publishing'
                 withCredentials([usernamePassword(credentialsId: 'work-log-registry', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
