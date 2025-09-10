@@ -4,9 +4,13 @@ spec:
       name: jnlp
       volumeMounts:
         - mountPath: /jenkins/.local/share/containers
-          name: work-log-build-cache
+          name: build-cache
       securityContext:
         privileged: true
         runAsUser: 1000
+  volumes:
+    - name: build-cache
+      persistentVolumeClaim:
+        claimName: work-log-build-cache
   securityContext:
     hostNetwork: true

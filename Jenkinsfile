@@ -16,7 +16,7 @@ pipeline {
             }
             steps {
                 echo 'Creating build cache volume'
-                withKubeConfig(credentialsId: 'work-log-kube-config', namespace: 'default', restrictKubeConfigAccess: true) {
+                withKubeConfig(credentialsId: 'work-log-kube-config', restrictKubeConfigAccess: true) {
                     sh 'kubectl create -f jenkins/build-cache.yaml'
                 }
             }
