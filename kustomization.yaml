@@ -17,5 +17,7 @@ resources:
   - kubernetes/pgsql/statefulset.yaml
   - kubernetes/php-fpm/deployment.yaml
   - kubernetes/php-fpm/service.yaml
+  - kubernetes/redis/service.yaml
+  - kubernetes/redis/statefulset.yaml
   - kubernetes/web/deployment.yaml
   - kubernetes/web/service.yaml
