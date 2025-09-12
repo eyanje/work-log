@@ -29,8 +29,10 @@ spec:
               name: postgres
           volumeMounts:
             - name: work-log-postgres-data
-              mountPath: /var/lib/postgresql
+              mountPath: /var/lib/postgresql-data
           env:
+            - name: PGDATA
+              value: /var/lib/postgresql-data/data
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
