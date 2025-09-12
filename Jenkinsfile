@@ -23,6 +23,9 @@ pipeline {
                     yamlFile 'jenkins/build-agent.yaml'
                 }
             }
+            options {
+                retry(3)
+            }
 
             steps {
                 echo 'Building'
