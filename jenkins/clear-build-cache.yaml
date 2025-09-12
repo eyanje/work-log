@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: clear-build-cache
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: clear-build-cache
+              image: harbor.eyanje.net/work-log/build-agent:latest
+              command: ["podman", "image", "prune", "--all", "--force"]
+              volumeMounts:
+                - mountPath: /home/jenkins/.local/share/containers
+                  name: build-cache
+          volumes:
+            - name: build-cache
+              persistentVolumeClaim:
+                claimName: work-log-build-cache
+          restartPolicy: OnFailure
+      ttlSecondsAfterFinished: 300
+  schedule: "@daily"
