@@ -1,5 +1,6 @@
 REPOSITORY = harbor.eyanje.net/work-log
 TAG = $(shell git rev-parse HEAD)
+VITE_APP_NAME = Journal
 
 DRIVER = docker
 BUILD = $(DRIVER) build
@@ -26,6 +27,7 @@ $(BUILD_TARGETS): FORCE
 
 %.image: docker/%/Dockerfile
 	$(BUILD) $(BUILD_ARGS) \
+		--env=VITE_APP_NAME=$(VITE_APP_NAME) \
 		-t $(REPOSITORY)/$*\:$(TAG) \
 		-t $(REPOSITORY)/$*\:latest \
 		-f $< .

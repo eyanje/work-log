@@ -26,5 +26,5 @@ COPY --chown=www-data:www-data . /var/www
 RUN composer install --no-dev --no-interaction \
     --no-progress --prefer-dist
 
-RUN npm install && npm run build
+RUN npm install && VITE_APP_NAME=${VITE_APP_NAME} npm run build
 
