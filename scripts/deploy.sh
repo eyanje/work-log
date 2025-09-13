@@ -2,8 +2,8 @@
 
 set -ex
 
-if [ $ENV_FILE ]; then
-    cp $ENV_FILE .env
+if [ "$ENV_FILE" ]; then
+    cp "$ENV_FILE" .env
 fi
 
 kubectl apply -k .
