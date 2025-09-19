@@ -98,6 +98,49 @@ test('cannot end before start', function () {
     $this->assertEmpty($book->records);
 });
 
+test('update record', function () {
+
+    $user = User::factory()->has(
+        Book::factory()
+    )->create();
+
+    $book = $user->books()->get()[0];
+
+    $dateFactory = new DateFactory;
+    $startedAt = $dateFactory->createFromTimestampUTC(1e10);
+    $endedAt = $dateFactory->createFromTimestampUTC(1e10 + 1e6);
+    $content = Str::random(10);
+
+    $record = $book->records()->create([
+        'content' => $content,
+        'started_at' => $startedAt,
+        'ended_at' => $endedAt,
+    ]);
+
+    $startedAt = $dateFactory->createFromTimestampUTC(1e10);
+    $endedAt = $dateFactory->createFromTimestampUTC(1e10 - 1e6);
+    $content = Str::random(10);
+
+    $response = $this
+        ->actingAs($user)
+        ->from("/book/{$book->id}")
+        ->put("/book/{$book->id}/record/{$record->id}", [
+            'content' => $content,
+            'started_at' => $startedAt,
+            'ended_at' => $endedAt,
+        ]
+        );
+
+    $response
+        ->assertSessionHasNoErrors()
+        ->assertRedirect("/book/{$book->id}");
+
+    // Reload and test record
+    $record = $book->records[0];
+    $this->assertEquals($content, $record->content);
+    $this->assertEquals($startedAt, $record->started_at);
+    $this->assertEquals($endedAt, $record->ended_at);
+});
 
 test('delete record', function () {
     $user = User::factory()->has(
@@ -118,11 +161,3 @@ test('delete record', function () {
 
     $this->assertModelMissing($record);
 });
-
-
-
-
-
-
-
-
