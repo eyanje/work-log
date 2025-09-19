@@ -28,15 +28,15 @@ const breadcrumbs = computed(() => [
 ]);
 
 /// Format a Date into YYYY-MM-ddTHH:mm for datetime-local
-const formatDate = (dateString: string) => {
-    if (dateString.length == 0) {
+const formatDate = (dateString: string | null) => {
+    if (dateString === null || dateString.length == 0) {
         return '';
     }
 
     const d = new Date(dateString);
 
     const year = `${d.getFullYear()}`.padStart(4, '0');
-    const month = `${d.getMonth()}`.padStart(2, '0');
+    const month = `${d.getMonth() + 1}`.padStart(2, '0');
     const date = `${d.getDate()}`.padStart(2, '0');
     const hours = `${d.getHours()}`.padStart(2, '0');
     const minutes = `${d.getMinutes()}`.padStart(2, '0');
@@ -56,7 +56,7 @@ const form = useForm({
 const submit = () => {
     // Format local dates as ISO
     form.started_at = new Date(form.local_started_at).toISOString();
-    form.ended_at = form.local_ended_at.length == 0 ? '' : new Date(form.local_ended_at).toISOString();
+    form.ended_at = form.local_ended_at.length == 0 ? null : new Date(form.local_ended_at).toISOString();
 
     form.put(route('record.update', { bookId: book.id, recordId: record.id }));
 };
