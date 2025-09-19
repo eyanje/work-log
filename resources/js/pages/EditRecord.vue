@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { Book, Record } from '@/types/book.d.ts';
 import { Head, useForm } from '@inertiajs/vue3';
@@ -26,13 +27,33 @@ const breadcrumbs = computed(() => [
     },
 ]);
 
+/// Format a Date into YYYY-MM-ddTHH:mm for datetime-local
+const formatDate = (dateString: string) => {
+    const d = new Date(dateString);
+
+    const year = `${d.getFullYear()}`.padStart(4, '0');
+    const month = `${d.getMonth()}`.padStart(2, '0');
+    const date = `${d.getDate()}`.padStart(2, '0');
+    const hours = `${d.getHours()}`.padStart(2, '0');
+    const minutes = `${d.getMinutes()}`.padStart(2, '0');
+
+    const formatted = `${year}-${month}-${date}T${hours}:${minutes}`;
+    return formatted;
+}
+
 const form = useForm({
     started_at: record.started_at,
+    local_started_at: formatDate(record.started_at),
     ended_at: record.ended_at,
+    local_ended_at: formatDate(record.ended_at),
     content: record.content,
 });
 
 const submit = () => {
+    // Format local dates as ISO
+    form.started_at = new Date(form.local_started_at).toISOString();
+    form.ended_at = new Date(form.local_ended_at).toISOString();
+
     form.put(route('record.update', { bookId: book.id, recordId: record.id }));
 };
 </script>
@@ -46,15 +67,17 @@ const submit = () => {
             <p>UID {{ record.uid }}</p>
 
             <form @submit.prevent="submit" class="mt-5 mr-auto grid w-xl gap-3">
-                <div>
+                <div class="grid gap-1">
                     <Label for="started-at">Started at</Label>
-                    <Input name="started-at" v-model="form.started_at" />
+                    <Input name="started-at" v-model="form.local_started_at"
+                                 type="datetime-local" />
                 </div>
-                <div>
+                <div class="grid gap-1">
                     <Label for="ended-at">Ended at</Label>
-                    <Input name="ended-at" v-model="form.ended_at" />
+                    <Input name="ended-at" v-model="form.local_ended_at"
+                                 type="datetime-local" />
                 </div>
-                <div>
+                <div class="grid gap-1">
                     <Label for="content">Content</Label>
                     <Input name="content" v-model="form.content" />
                 </div>
