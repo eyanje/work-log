@@ -125,7 +125,27 @@ const bookmark = (book: Book) => {
                                     minute: '2-digit',
                                 })
                             }}</time>
-                            <div v-else></div>
+                            <div v-else>
+                                <button
+                                    type="submit"
+                                    class="underline"
+                                    @click="
+                                        router.put(
+                                            route('record.update', {
+                                                bookId: book.id,
+                                                recordId: record.id,
+                                            }),
+                                            {
+                                                started_at: record.started_at,
+                                                ended_at: new Date().toISOString(),
+                                                content: record.content,
+                                            },
+                                        )
+                                    "
+                                >
+                                    Now
+                                </button>
+                            </div>
                         </td>
                         <td class="w-full">
                             {{ record.content }}
