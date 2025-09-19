@@ -29,6 +29,10 @@ const breadcrumbs = computed(() => [
 
 /// Format a Date into YYYY-MM-ddTHH:mm for datetime-local
 const formatDate = (dateString: string) => {
+    if (dateString.length == 0) {
+        return '';
+    }
+
     const d = new Date(dateString);
 
     const year = `${d.getFullYear()}`.padStart(4, '0');
@@ -52,7 +56,7 @@ const form = useForm({
 const submit = () => {
     // Format local dates as ISO
     form.started_at = new Date(form.local_started_at).toISOString();
-    form.ended_at = new Date(form.local_ended_at).toISOString();
+    form.ended_at = form.local_ended_at.length == 0 ? '' : new Date(form.local_ended_at).toISOString();
 
     form.put(route('record.update', { bookId: book.id, recordId: record.id }));
 };
@@ -76,6 +80,9 @@ const submit = () => {
                     <Label for="ended-at">Ended at</Label>
                     <Input name="ended-at" v-model="form.local_ended_at"
                                  type="datetime-local" />
+                    <button type="button" class="w-auto mr-auto underline"
+                        @click="form.local_ended_at = ''"
+                        >Clear</button>
                 </div>
                 <div class="grid gap-1">
                     <Label for="content">Content</Label>
