@@ -37,9 +37,11 @@ Route::post('book/{bookId}', [RecordController::class, 'create']
 Route::get('book/{bookId}/record/{recordId}', [RecordController::class, 'edit']
 )->middleware(['auth', 'verified'])->name('record.edit');
 
+Route::put('book/{bookId}/record/{recordId}', [RecordController::class, 'update']
+)->middleware(['auth', 'verified'])->name('record.update');
+
 Route::delete('book/{bookId}/record/{recordId}', [RecordController::class, 'delete']
 )->middleware(['auth', 'verified'])->name('record.delete');
-
 
 // Deleting books
 

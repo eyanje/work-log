@@ -42,6 +42,9 @@ class RecordController extends Controller
         $record->content = $request->input('content');
         $record->started_at = $request->date('started_at');
         $record->ended_at = $request->date('ended_at');
+        $record->save();
+
+        return redirect()->route('book.show', ['id' => $bookId]);
     }
 
     public function delete(Request $request, string $bookId, string $recordId)

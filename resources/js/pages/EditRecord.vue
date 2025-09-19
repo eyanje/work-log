@@ -58,7 +58,7 @@ const submit = () => {
                     <Label for="content">Content</Label>
                     <Input name="content" v-model="form.content" />
                 </div>
-                <Button type="submit" :active="form.isDirty">Save changes</Button>
+                <Button type="submit" :active="form.isDirty">Save and exit</Button>
             </form>
         </div>
     </AppLayout>
