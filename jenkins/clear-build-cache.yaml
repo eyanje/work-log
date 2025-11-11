@@ -14,6 +14,9 @@ spec:
               volumeMounts:
                 - mountPath: /home/jenkins/.local/share/containers
                   name: build-cache
+              securityContext:
+                privileged: true
+                runAsUser: 1000
           volumes:
             - name: build-cache
               persistentVolumeClaim:
