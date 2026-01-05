@@ -1,26 +1,9 @@
 spec:
-  initContainers:
-    - name: init-cache
-      image: docker.io/alpine:latest
-      command:
-        - chown
-        - "1000:1000"
-        - "/home/jenkins/.local/share/containers"
-      volumeMounts:
-        - mountPath: /home/jenkins/.local/share/containers
-          name: build-cache
   containers:
     - name: jnlp
       image: harbor.eyanje.net/work-log/build-agent:latest
-      volumeMounts:
-        - mountPath: /home/jenkins/.local/share/containers
-          name: build-cache
       securityContext:
         privileged: true
         runAsUser: 1000
-  volumes:
-    - name: build-cache
-      persistentVolumeClaim:
-        claimName: work-log-build-cache
   securityContext:
     hostNetwork: true

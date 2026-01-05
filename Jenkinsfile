@@ -2,27 +2,12 @@ pipeline {
     agent {
         kubernetes {
             cloud 'kubernetes'
-            yamlFile 'jenkins/build-agent-minimal.yaml'
+            yamlFile 'jenkins/build-agent.yaml'
         }
     }
 
     stages {
-        stage('Create build cache') {
-            steps {
-                echo 'Creating build cache volume'
-                withKubeConfig(credentialsId: 'work-log-kube-config', restrictKubeConfigAccess: true) {
-                    sh 'kubectl apply -f jenkins/build-cache.yaml'
-                }
-            }
-        }
-
         stage('Build') {
-            agent {
-                kubernetes {
-                    cloud 'kubernetes'
-                    yamlFile 'jenkins/build-agent.yaml'
-                }
-            }
             options {
                 retry(3)
             }
@@ -36,24 +21,12 @@ pipeline {
             }
         }
         stage('Test') {
-            agent {
-                kubernetes {
-                    cloud 'kubernetes'
-                    yamlFile 'jenkins/build-agent.yaml'
-                }
-            }
             steps {
                 echo 'Test'
                 sh 'make test'
             }
         }
         stage('Publish') {
-            agent {
-                kubernetes {
-                    cloud 'kubernetes'
-                    yamlFile 'jenkins/build-agent.yaml'
-                }
-            }
             options {
                 retry(3)
             }
@@ -66,12 +39,6 @@ pipeline {
             }
         }
         stage('Deploy') {
-            agent {
-                kubernetes {
-                    cloud 'kubernetes'
-                    yamlFile 'jenkins/build-agent.yaml'
-                }
-            }
             environment {
                 ENV_FILE = credentials('work-log-environment')
             }
